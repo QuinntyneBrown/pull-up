@@ -52,7 +52,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 
 ## B. components library buildout (supporting infrastructure)
 
-### FT-005: App-shell components — *enables* L2-052
+### FT-005: App-shell components — *enables* L2-052 — **done**
 - **Slice contents:** in `projects/components/src/lib/`: `app-bar/app-bar.component.{ts,html,scss}` (leading icon slot, title input, trailing avatar slot), `bottom-nav-bar/bottom-nav-bar.component.{ts,html,scss}` (hidden ≥768 via CSS), `nav-rail/nav-rail.component.{ts,html,scss}` (shown ≥768 via CSS).
 - **Acceptance test:** Playwright responsive smoke (lands later in FT-020) verifies the swap at 768px; component-level inspection by composition in band D / E / F pages.
 - **Guidance:** Frontend, Library Structure (components imports nothing from api / domain).

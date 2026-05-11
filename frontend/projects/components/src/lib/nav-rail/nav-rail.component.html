@@ -1,0 +1,12 @@
+<nav class="nav-rail" data-pu="nav-rail" role="navigation">
+  @for (item of items; track item.route) {
+    <a class="nav-rail__item"
+       [class.nav-rail__item--active]="item.route === activeRoute"
+       [routerLink]="item.route"
+       [attr.aria-label]="item.label"
+       [attr.aria-current]="item.route === activeRoute ? 'page' : null">
+      <mat-icon class="nav-rail__icon">{{ item.icon }}</mat-icon>
+      <span class="nav-rail__label">{{ item.label }}</span>
+    </a>
+  }
+</nav>
