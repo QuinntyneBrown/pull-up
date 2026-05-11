@@ -106,7 +106,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Slice:** `UpdateProfileCommand` + handler + validator (fullName 1–100, displayName 1–40). `UsersController.UpdateProfile`.
 - **Acceptance test:** `UpdateProfileTests` — valid update → 200 + updated values reflected on `/me`; empty fullName → 400; over-length → 400.
 
-### BT-013: Email-change request + confirmation
+### BT-013: Email-change request + confirmation — **DONE** (see `docs/evaluations/BI1-BT-013.md`)
 - **Implements:** L2-013.
 - **Slice:** add `PendingEmailChange` value type on `User`; two commands — `RequestEmailChangeCommand` (requires re-typed password, stores `PendingEmail` + verification token, sends verification via `LoggingEmailSender`) and `ConfirmEmailChangeCommand` (validates token, promotes pending to primary). `UsersController.RequestEmailChange` + `ConfirmEmailChange`. Migration `AddPendingEmailChanges`.
 - **Acceptance test:** `EmailChangeTests` — request with wrong current password → 401; request with right password → 202 + verification email recorded; confirm with the token → email updated; confirm with a stale token → 400.

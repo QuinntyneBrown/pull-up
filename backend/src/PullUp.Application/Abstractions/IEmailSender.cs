@@ -10,4 +10,10 @@ public interface IEmailSender
         string resetTokenRaw,
         DateTimeOffset expiresAt,
         CancellationToken cancellationToken);
+
+    Task SendEmailChangeVerificationAsync(
+        string toEmail,
+        string verificationTokenRaw,
+        DateTimeOffset expiresAt,
+        CancellationToken cancellationToken);
 }

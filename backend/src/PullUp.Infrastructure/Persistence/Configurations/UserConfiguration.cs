@@ -40,5 +40,9 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.LastPasswordChangedAt)
             .IsRequired();
+
+        builder.Property(u => u.PendingEmail).HasMaxLength(254);
+        builder.Property(u => u.PendingEmailTokenHash).HasMaxLength(128);
+        builder.Property(u => u.PendingEmailExpiresAt);
     }
 }

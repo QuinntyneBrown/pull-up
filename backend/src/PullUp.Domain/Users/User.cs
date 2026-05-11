@@ -11,6 +11,10 @@ public sealed class User
     public DateTimeOffset CreatedAt { get; private set; }
     public DateTimeOffset LastPasswordChangedAt { get; private set; }
 
+    public string? PendingEmail { get; private set; }
+    public string? PendingEmailTokenHash { get; private set; }
+    public DateTimeOffset? PendingEmailExpiresAt { get; private set; }
+
     private User() { }
 
     public static User Register(string email, string fullName, string passwordHash)
@@ -45,5 +49,36 @@ public sealed class User
         ArgumentException.ThrowIfNullOrEmpty(trimmedDisplayName);
         FullName = trimmedFullName;
         DisplayName = trimmedDisplayName;
+    }
+
+    public void RequestEmailChange(string newEmail, string tokenHash, DateTimeOffset expiresAt)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(newEmail);
+        ArgumentException.ThrowIfNullOrEmpty(tokenHash);
+        PendingEmail = newEmail.Trim().ToLowerInvariant();
+        PendingEmailTokenHash = tokenHash;
+        PendingEmailExpiresAt = expiresAt;
+    }
+
+    public bool TryConfirmEmailChange(string tokenHash, DateTimeOffset now)
+    {
+        if (PendingEmail is null || PendingEmailTokenHash is null || PendingEmailExpiresAt is null)
+        {
+            return false;
+        }
+        if (PendingEmailExpiresAt <= now)
+        {
+            return false;
+        }
+        if (!string.Equals(PendingEmailTokenHash, tokenHash, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        Email = PendingEmail;
+        PendingEmail = null;
+        PendingEmailTokenHash = null;
+        PendingEmailExpiresAt = null;
+        return true;
     }
 }

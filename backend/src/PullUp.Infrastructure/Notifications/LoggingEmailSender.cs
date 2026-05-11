@@ -27,4 +27,17 @@ public sealed class LoggingEmailSender : IEmailSender
             expiresAt);
         return Task.CompletedTask;
     }
+
+    public Task SendEmailChangeVerificationAsync(
+        string toEmail,
+        string verificationTokenRaw,
+        DateTimeOffset expiresAt,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogInformation(
+            "Email-change verification queued for {Email} (expires {ExpiresAt})",
+            toEmail,
+            expiresAt);
+        return Task.CompletedTask;
+    }
 }

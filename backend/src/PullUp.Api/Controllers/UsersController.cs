@@ -2,8 +2,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
+using PullUp.Application.Features.Users.ConfirmEmailChange;
 using PullUp.Application.Features.Users.GetCurrentUser;
 using PullUp.Application.Features.Users.RegisterUser;
+using PullUp.Application.Features.Users.RequestEmailChange;
 using PullUp.Application.Features.Users.UpdateProfile;
 
 namespace PullUp.Api.Controllers;
@@ -54,6 +56,34 @@ public sealed class UsersController : ControllerBase
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new UpdateProfileCommand(request.FullName, request.DisplayName), cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPost("me/email-change")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> RequestEmailChange(
+        [FromBody] RequestEmailChangeRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(
+            new RequestEmailChangeCommand(request.NewEmail, request.CurrentPassword),
+            cancellationToken);
+        return Accepted();
+    }
+
+    [HttpPost("me/email-change/confirm")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> ConfirmEmailChange(
+        [FromBody] ConfirmEmailChangeRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new ConfirmEmailChangeCommand(request.Token), cancellationToken);
         return NoContent();
     }
 }
