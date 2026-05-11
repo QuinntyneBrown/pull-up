@@ -28,7 +28,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 
 ## A. api library — backend-facing services (supporting infrastructure)
 
-### FT-001: AuthService completion + AuthStorage refactor — *enables* L2-004, L2-005, L2-006, L2-007, L2-008, L2-009
+### FT-001: AuthService completion + AuthStorage refactor — *enables* L2-004, L2-005, L2-006, L2-007, L2-008, L2-009 — **done**
 - **Slice contents:** in `projects/api/src/lib/auth/`: add `signIn`, `requestPasswordReset`, `completePasswordReset`, `refresh`, `signOut` to `AuthService` + `IAuthService`; add DTOs `SignInRequest/Response`, `RequestPasswordResetRequest`, `CompletePasswordResetRequest`, `RefreshAccessTokenRequest/Response`, `SignOutRequest`. Refactor token persistence out of `AuthService` into `AuthStorage` (single-responsibility wrapper around `localStorage`).
 - **Acceptance test:** unit test in `frontend/projects/api/src/lib/auth/auth.service.spec.ts` (TestBed + `HttpTestingController`): each new method posts to the expected path with the expected body and parses the response shape.
 - **Guidance:** Frontend, Library Structure (api).

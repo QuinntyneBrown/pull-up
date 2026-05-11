@@ -38,7 +38,9 @@ export class HomePageComponent implements OnInit {
   }
 
   signOut(): void {
-    this.auth.signOut();
-    this.router.navigateByUrl('/sign-up');
+    this.auth.signOut().subscribe({
+      next: () => this.router.navigateByUrl('/sign-up'),
+      error: () => this.router.navigateByUrl('/sign-up'),
+    });
   }
 }
