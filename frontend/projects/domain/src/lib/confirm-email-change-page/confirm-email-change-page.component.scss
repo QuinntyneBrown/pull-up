@@ -1,0 +1,43 @@
+.confirm-email {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--mat-sys-surface-container);
+
+  &__card {
+    background: var(--mat-sys-surface);
+    border-radius: 28px;
+    padding: 24px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: var(--mat-sys-level1);
+    text-align: center;
+  }
+
+  &__brand {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__heading {
+    font: var(--mat-sys-headline-medium);
+    margin: 0 0 8px;
+  }
+
+  &__sub {
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0 0 24px;
+  }
+
+  &__cta {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 768px) {
+  .confirm-email__card { padding: 48px; }
+}

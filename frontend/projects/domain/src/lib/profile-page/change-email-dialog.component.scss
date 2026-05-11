@@ -1,0 +1,16 @@
+.change-email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 280px;
+
+  &__sub {
+    margin: 0 0 12px;
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-medium);
+  }
+
+  &__field {
+    width: 100%;
+  }
+}

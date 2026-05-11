@@ -29,12 +29,19 @@
             <mat-hint>Email changes are confirmed via a link sent to the new address.</mat-hint>
           </mat-form-field>
 
-          <button mat-flat-button color="primary" type="button"
-                  class="profile-page__edit-button"
-                  data-testid="profile-edit-button"
-                  (click)="openEdit()">
-            Edit profile
-          </button>
+          <div class="profile-page__actions">
+            <button mat-flat-button color="primary" type="button"
+                    class="profile-page__edit-button"
+                    data-testid="profile-edit-button"
+                    (click)="openEdit()">
+              Edit profile
+            </button>
+            <button mat-stroked-button type="button"
+                    data-testid="profile-change-email-button"
+                    (click)="openChangeEmail()">
+              Change email
+            </button>
+          </div>
         </section>
 
         <section class="profile-page__section" [formGroup]="prefsForm">

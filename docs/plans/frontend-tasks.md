@@ -100,7 +100,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** extend `profile-edit-flow.spec.ts` (or split into a `notification-preferences.spec.ts`) — new user lands with all on; toggling persists across reload.
 - **Guidance:** Frontend, Library Structure.
 
-### FT-013: Email change request + confirm — **L2-013**
+### FT-013: Email change request + confirm — **L2-013** — **done**
 - **Slice contents:** add a "Change email" affordance to `ProfilePage` that opens a `MatDialog` for new email + current password and calls `PROFILE_SERVICE.requestEmailChange(...)`. New `confirm-email-change-page` domain component reads `?token=` and calls `PROFILE_SERVICE.confirmEmailChange(...)`. Route `/email-change/confirm`.
 - **Acceptance test:** `email-change-flow.spec.ts` + two POMs (`ProfilePagePom` extension + `ConfirmEmailChangePagePom`) — request flow shows verification success snackbar; confirm page reads the token from the URL and on success the profile shows the new email.
 - **Guidance:** Frontend, Authentication.

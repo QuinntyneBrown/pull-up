@@ -1,0 +1,34 @@
+<main class="confirm-email">
+  <section class="confirm-email__card">
+    <header class="confirm-email__brand"><pu-brand-logo></pu-brand-logo></header>
+
+    @switch (state()) {
+      @case ('pending') {
+        <h1 class="confirm-email__heading">Confirming your email…</h1>
+        <p class="confirm-email__sub" data-testid="confirm-email-pending">Just a moment.</p>
+      }
+      @case ('success') {
+        <h1 class="confirm-email__heading">Email updated</h1>
+        <p class="confirm-email__sub" data-testid="confirm-email-success">
+          Your account email has been updated. From now on, sign in with your new address.
+        </p>
+        <a routerLink="/profile" mat-flat-button color="primary" class="confirm-email__cta" data-testid="confirm-email-profile-link">
+          Back to profile
+        </a>
+      }
+      @case ('invalid') {
+        <h1 class="confirm-email__heading">Link expired</h1>
+        <p class="confirm-email__sub" data-testid="confirm-email-invalid">
+          This confirmation link is invalid or has expired. Open your profile and request a new email-change link.
+        </p>
+        <a routerLink="/profile" mat-stroked-button class="confirm-email__cta">Back to profile</a>
+      }
+      @case ('missing') {
+        <h1 class="confirm-email__heading">Missing token</h1>
+        <p class="confirm-email__sub" data-testid="confirm-email-missing">
+          This page needs a confirmation token. Please open the link from your email.
+        </p>
+      }
+    }
+  </section>
+</main>

@@ -42,9 +42,15 @@
     width: 100%;
   }
 
+  &__actions {
+    display: flex;
+    gap: var(--pu-space-2, 8px);
+    margin-top: var(--pu-space-2, 8px);
+    flex-wrap: wrap;
+  }
+
   &__edit-button {
     align-self: flex-start;
-    margin-top: var(--pu-space-2, 8px);
   }
 
   &__loading,

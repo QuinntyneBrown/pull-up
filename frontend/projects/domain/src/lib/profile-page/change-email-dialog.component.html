@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Change email</h2>
+<mat-dialog-content>
+  <p class="change-email-form__sub">We'll send a confirmation link to your new address before changing it.</p>
+  <form class="change-email-form" [formGroup]="form" novalidate>
+    <mat-form-field appearance="fill" class="change-email-form__field">
+      <mat-label>New email</mat-label>
+      <input matInput type="email" formControlName="newEmail" autocomplete="email" data-testid="change-email-new" />
+      @if (newEmail.touched && newEmail.errors?.['email']) {
+        <mat-error>Enter a valid email address.</mat-error>
+      }
+      @if (newEmail.touched && newEmail.errors?.['required']) {
+        <mat-error>New email is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="change-email-form__field">
+      <mat-label>Current password</mat-label>
+      <input matInput type="password" formControlName="currentPassword" autocomplete="current-password" data-testid="change-email-password" />
+      @if (currentPassword.touched && currentPassword.errors?.['required']) {
+        <mat-error>Password is required.</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()" data-testid="change-email-cancel">Cancel</button>
+  <button mat-flat-button color="primary" type="button" (click)="send()" data-testid="change-email-send">Send link</button>
+</mat-dialog-actions>

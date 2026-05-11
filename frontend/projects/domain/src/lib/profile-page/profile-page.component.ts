@@ -25,6 +25,10 @@ import {
 } from 'components';
 import { debounceTime, switchMap } from 'rxjs';
 import {
+  ChangeEmailDialogComponent,
+  ChangeEmailDialogResult,
+} from './change-email-dialog.component';
+import {
   EditProfileDialogComponent,
   EditProfileDialogResult,
 } from './edit-profile-dialog.component';
@@ -114,6 +118,32 @@ export class ProfilePageComponent implements OnInit {
         },
         error: () => {
           this.snackBar.open('Could not save changes. Please try again.', 'Dismiss', { duration: 5000 });
+        },
+      });
+    });
+  }
+
+  openChangeEmail(): void {
+    const ref = this.dialog.open<
+      ChangeEmailDialogComponent,
+      undefined,
+      ChangeEmailDialogResult | undefined
+    >(ChangeEmailDialogComponent, { width: '420px' });
+    ref.afterClosed().subscribe(result => {
+      if (!result) return;
+      this.profile.requestEmailChange(result).subscribe({
+        next: () => this.snackBar.open(
+          'Verification link sent. Open the email on the new address to confirm.',
+          'Dismiss',
+          { duration: 6000 },
+        ),
+        error: err => {
+          const msg = err?.status === 401
+            ? 'Current password is incorrect.'
+            : err?.status === 409
+              ? 'That email is already in use.'
+              : 'Could not request the email change. Please try again.';
+          this.snackBar.open(msg, 'Dismiss', { duration: 5000 });
         },
       });
     });
