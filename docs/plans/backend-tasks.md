@@ -39,7 +39,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `AuditLoggerTests` — registering a user writes a `SIGN_UP_SUCCESS` row with the actor id; a failed login writes `SIGN_IN_FAILURE` with the email and a `FAILURE` outcome.
 - **Guidance:** General, Validation, Backend (.NET), one type per file.
 
-### BT-003: Request body redaction filter
+### BT-003: Request body redaction filter — **DONE** (see `docs/evaluations/BI1-BT-003.md`)
 - **Implements:** L2-044, L2-050.
 - **Slice:** new `Api/Filters/RequestBodyRedactionFilter` (or `ILogger` enricher) that replaces `password`, `currentPassword`, `newPassword`, `token`, `refreshToken`, `resetToken` fields in the JSON body before logging. Confirms no token/hash/connection-string secret reaches application logs.
 - **Acceptance test:** `RedactionTests` — POST a payload with a `password` field, capture the request log line, assert the value is `***REDACTED***`.

@@ -12,7 +12,7 @@ namespace PullUp.Api.IntegrationTests;
 // the same DataSource name see the same in-memory DB; SQLite drops the DB once the
 // last connection closes, so the factory holds one extra connection open for its
 // lifetime to keep the DB alive across requests.
-public sealed class TestWebApplicationFactory : WebApplicationFactory<Program>
+public class TestWebApplicationFactory : WebApplicationFactory<Program>
 {
     private const string ConnectionString = "DataSource=file:pullup-tests?mode=memory&cache=shared";
     private readonly SqliteConnection _keepAlive;
@@ -26,6 +26,7 @@ public sealed class TestWebApplicationFactory : WebApplicationFactory<Program>
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Testing");
+        base.ConfigureWebHost(builder);
     }
 
     private static readonly object _gate = new();
