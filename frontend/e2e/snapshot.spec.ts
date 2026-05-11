@@ -64,6 +64,13 @@ test('snapshot home at 360 (after sign-up)', async ({ page }) => {
       }),
     });
   });
+  await page.route('**/api/events*', async route => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ thisWeek: [], laterThisMonth: [], nextMonth: [], past: [] }),
+    });
+  });
 
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/sign-up');
@@ -71,7 +78,7 @@ test('snapshot home at 360 (after sign-up)', async ({ page }) => {
   await page.getByTestId('signup-email').fill('rosa@example.com');
   await page.getByTestId('signup-password').fill('Hunter2!secret');
   await page.getByTestId('signup-submit').click();
-  await page.getByTestId('home-welcome').waitFor();
+  await page.getByTestId('home-filter-strip').waitFor();
   await page.waitForTimeout(300);
   await page.screenshot({ path: path.join(OUT_DIR, 'home.360.png'), fullPage: true });
 });
@@ -107,6 +114,13 @@ test('snapshot home at 1440', async ({ page }) => {
       }),
     });
   });
+  await page.route('**/api/events*', async route => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ thisWeek: [], laterThisMonth: [], nextMonth: [], past: [] }),
+    });
+  });
 
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/sign-up');
@@ -114,7 +128,7 @@ test('snapshot home at 1440', async ({ page }) => {
   await page.getByTestId('signup-email').fill('rosa@example.com');
   await page.getByTestId('signup-password').fill('Hunter2!secret');
   await page.getByTestId('signup-submit').click();
-  await page.getByTestId('home-welcome').waitFor();
+  await page.getByTestId('home-filter-strip').waitFor();
   await page.waitForTimeout(300);
   await page.screenshot({ path: path.join(OUT_DIR, 'home.1440.png'), fullPage: true });
 });

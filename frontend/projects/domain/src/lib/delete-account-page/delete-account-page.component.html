@@ -1,0 +1,54 @@
+<div class="delete-account-page" data-pu="delete-account-page">
+  <div class="delete-account-page__header">
+    <a mat-icon-button routerLink="/profile" aria-label="Back to profile" data-testid="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+    <h1 class="delete-account-page__title">Delete account</h1>
+  </div>
+
+  <main class="delete-account-page__main">
+    <section class="delete-account-page__card">
+      <p class="delete-account-page__warning">
+        This action is permanent and cannot be undone. All your events and data will be removed.
+      </p>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <mat-form-field appearance="fill" class="delete-account-page__field">
+          <mat-label>Current password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="currentPassword"
+            data-testid="delete-password"
+            autocomplete="current-password"
+          />
+          @if (form.get('currentPassword')?.hasError('required') && form.get('currentPassword')?.touched) {
+            <mat-error>Password is required.</mat-error>
+          }
+        </mat-form-field>
+
+        @if (serverError()) {
+          <p class="delete-account-page__server-error" role="alert" data-testid="delete-server-error">
+            {{ serverError() }}
+          </p>
+        }
+
+        <mat-checkbox formControlName="confirm" data-testid="delete-confirm">
+          I understand this will permanently delete my account.
+        </mat-checkbox>
+
+        <div class="delete-account-page__actions">
+          <button mat-stroked-button type="button" routerLink="/profile">Cancel</button>
+          <button
+            mat-flat-button
+            color="warn"
+            type="submit"
+            [disabled]="submitting()"
+            data-testid="delete-submit">
+            Delete my account
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>

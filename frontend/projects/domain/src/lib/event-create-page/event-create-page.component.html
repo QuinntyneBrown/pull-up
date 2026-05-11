@@ -1,0 +1,108 @@
+<div class="event-create-page" data-pu="event-create-page">
+  <pu-app-bar title="New event"></pu-app-bar>
+
+  <main class="event-create-page__main">
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="event-create-page__form">
+      <mat-form-field appearance="fill" class="event-create-page__field">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" data-testid="create-title" />
+        @if (form.get('title')?.hasError('required') && form.get('title')?.touched) {
+          <mat-error>Title is required.</mat-error>
+        }
+        @if (form.get('title')?.hasError('maxlength')) {
+          <mat-error>Title must be 200 characters or less.</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="event-create-page__row">
+        <mat-form-field appearance="fill" class="event-create-page__field">
+          <mat-label>Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datePicker"
+            formControlName="date"
+            [min]="today"
+            data-testid="create-date"
+            readonly />
+          <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+          <mat-datepicker #datePicker></mat-datepicker>
+          @if (form.get('date')?.hasError('required') && form.get('date')?.touched) {
+            <mat-error>Date is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="event-create-page__field">
+          <mat-label>Time</mat-label>
+          <input matInput type="time" formControlName="time" data-testid="create-time" />
+          @if (form.get('time')?.hasError('required') && form.get('time')?.touched) {
+            <mat-error>Time is required.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill" class="event-create-page__field">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" data-testid="create-location" />
+        @if (form.get('location')?.hasError('required') && form.get('location')?.touched) {
+          <mat-error>Location is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="event-create-page__field">
+        <mat-label>Description (optional)</mat-label>
+        <textarea matInput formControlName="description" rows="3" data-testid="create-description"></textarea>
+      </mat-form-field>
+
+      <section class="event-create-page__options">
+        <h2 class="event-create-page__section-title">Options</h2>
+        <mat-slide-toggle formControlName="allowPlusOne" data-testid="create-allow-plus-one">
+          Allow +1 guests
+        </mat-slide-toggle>
+        <mat-slide-toggle formControlName="showGuestList" data-testid="create-show-guest-list">
+          Show guest list to invitees
+        </mat-slide-toggle>
+      </section>
+
+      <section class="event-create-page__invitees">
+        <h2 class="event-create-page__section-title">Invite people</h2>
+        <div class="event-create-page__invitee-input-row">
+          <mat-form-field appearance="fill" class="event-create-page__field--grow">
+            <mat-label>Email address</mat-label>
+            <input
+              matInput
+              formControlName="inviteeInput"
+              type="email"
+              data-testid="create-invitee-input"
+              (keydown.enter)="$event.preventDefault(); addInvitee()" />
+          </mat-form-field>
+          <button mat-stroked-button type="button" (click)="addInvitee()" data-testid="create-invitee-add">Add</button>
+        </div>
+
+        @if (inviteeEmails().length > 0) {
+          <mat-chip-set class="event-create-page__chips" data-testid="create-invitee-chips">
+            @for (email of inviteeEmails(); track email) {
+              <mat-chip (removed)="removeInvitee(email)">
+                {{ email }}
+                <button matChipRemove [attr.aria-label]="'Remove ' + email">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+            }
+          </mat-chip-set>
+        }
+      </section>
+
+      <div class="event-create-page__actions">
+        <button mat-stroked-button type="button" routerLink="/home">Cancel</button>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="submitting()"
+          data-testid="create-submit">
+          Create event
+        </button>
+      </div>
+    </form>
+  </main>
+</div>

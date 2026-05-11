@@ -1,0 +1,111 @@
+<div class="event-detail-page" data-pu="event-detail-page">
+  <pu-app-bar title="Event details"></pu-app-bar>
+
+  <div class="event-detail-page__shell">
+    <pu-nav-rail [items]="navItems" [activeRoute]="activeRoute"></pu-nav-rail>
+
+    <main class="event-detail-page__main">
+      @if (loading()) {
+        <p class="event-detail-page__loading" data-testid="detail-loading">Loading event…</p>
+      } @else if (errored()) {
+        <p class="event-detail-page__error" data-testid="detail-error">
+          Could not load event. <button mat-button (click)="retry()">Try again</button>
+        </p>
+      } @else if (event(); as event) {
+        @if (event.status === 'Cancelled') {
+          <div class="event-detail-page__cancelled-banner" data-testid="detail-cancelled-banner">
+            <mat-icon>cancel</mat-icon>
+            This event has been cancelled.
+          </div>
+        }
+
+        <section class="event-detail-page__hero" data-testid="detail-hero">
+          <h1 class="event-detail-page__title" data-testid="detail-title">{{ event.title }}</h1>
+          <div class="event-detail-page__meta">
+            <span class="event-detail-page__meta-item">
+              <mat-icon>calendar_today</mat-icon>
+              {{ event.startsAtUtc | date:'EEE, MMM d, y' }}
+            </span>
+            <span class="event-detail-page__meta-item">
+              <mat-icon>schedule</mat-icon>
+              {{ event.startsAtUtc | date:'h:mm a' }}
+            </span>
+            <span class="event-detail-page__meta-item">
+              <mat-icon>location_on</mat-icon>
+              {{ event.location }}
+            </span>
+          </div>
+        </section>
+
+        @if (!isPast) {
+          <section class="event-detail-page__rsvp" data-testid="detail-rsvp">
+            <h2 class="event-detail-page__section-title">Your RSVP</h2>
+            <pu-segmented-button
+              [options]="rsvpOptions"
+              [selected]="event.myRsvpStatus"
+              ariaLabel="Set your RSVP"
+              (selectionChange)="onRsvpChange($event)"
+              data-testid="detail-rsvp-picker">
+            </pu-segmented-button>
+          </section>
+        }
+
+        <section class="event-detail-page__counts" data-testid="detail-counts">
+          <span class="event-detail-page__count" data-testid="detail-going-count">
+            <mat-icon>check_circle</mat-icon> {{ event.goingCount }} Going
+          </span>
+          <span class="event-detail-page__count">
+            <mat-icon>help</mat-icon> {{ event.maybeCount }} Maybe
+          </span>
+          <span class="event-detail-page__count">
+            <mat-icon>cancel</mat-icon> {{ event.cantGoCount }} Can't go
+          </span>
+        </section>
+
+        @if (event.description) {
+          <section class="event-detail-page__description" data-testid="detail-description">
+            <h2 class="event-detail-page__section-title">About</h2>
+            <p class="event-detail-page__description-text">{{ event.description }}</p>
+          </section>
+        }
+
+        <section class="event-detail-page__host" data-testid="detail-host">
+          <h2 class="event-detail-page__section-title">Hosted by</h2>
+          <div class="event-detail-page__host-row">
+            <span class="event-detail-page__host-avatar">
+              {{ event.host.displayName.charAt(0) }}
+            </span>
+            <span class="event-detail-page__host-name">{{ event.host.fullName }}</span>
+          </div>
+        </section>
+
+        @if (event.showGuestList && event.guests && event.guests.length > 0) {
+          <section class="event-detail-page__guests" data-testid="detail-guests">
+            <h2 class="event-detail-page__section-title">Guests</h2>
+            <pu-rsvp-avatar-stack [entries]="avatarEntries"></pu-rsvp-avatar-stack>
+          </section>
+        }
+
+        @if (event.isHost && event.status !== 'Cancelled') {
+          <section class="event-detail-page__host-actions" data-testid="detail-host-actions">
+            <a mat-stroked-button [routerLink]="['/events', event.id, 'edit']" data-testid="detail-edit-button">
+              <mat-icon>edit</mat-icon>
+              Edit event
+            </a>
+            <button
+              mat-stroked-button
+              color="warn"
+              (click)="onCancelEvent()"
+              [disabled]="cancelSubmitting()"
+              data-testid="detail-cancel-button">
+              <mat-icon>cancel</mat-icon>
+              Cancel event
+            </button>
+          </section>
+        }
+      }
+    </main>
+  </div>
+
+  <pu-bottom-nav-bar [items]="navItems" [activeRoute]="activeRoute"></pu-bottom-nav-bar>
+</div>

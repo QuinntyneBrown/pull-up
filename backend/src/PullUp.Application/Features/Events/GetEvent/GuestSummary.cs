@@ -6,4 +6,5 @@ public sealed record GuestSummary(
     string? FullName,
     string? DisplayName,
     string? RsvpStatus,
-    string? Note);
+    string? Note,
+    Guid InvitationId);

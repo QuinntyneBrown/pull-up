@@ -82,7 +82,7 @@ public sealed class GetEventQueryHandler : IRequestHandler<GetEventQuery, GetEve
                     rsvpStatus = r.Status.ToString();
                     note = r.Note;
                 }
-                guestList.Add(new GuestSummary(i.UserId, i.InvitedEmail, fullName, displayName, rsvpStatus, note));
+                guestList.Add(new GuestSummary(i.UserId, i.InvitedEmail, fullName, displayName, rsvpStatus, note, i.Id));
             }
             guests = guestList;
         }

@@ -39,6 +39,13 @@ test.describe('Pull Up sign-in flow', () => {
         }),
       });
     });
+    await page.route('**/api/events', async route => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ thisWeek: [], laterThisMonth: [], nextMonth: [], past: [] }),
+      });
+    });
 
     const signIn = new SignInPagePom(page);
     const home = new HomePagePom(page);
@@ -46,7 +53,7 @@ test.describe('Pull Up sign-in flow', () => {
     await signIn.goto();
     await signIn.fillAndSubmit('rosa@example.com', 'Hunter2!secret');
 
-    await home.expectVisible('Rosa');
+    await home.expectVisible();
 
     // Tokens stored.
     const tokens = await page.evaluate(() => ({

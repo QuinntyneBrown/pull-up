@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 import {
   AUTH_SERVICE,
   CurrentUser,
@@ -49,6 +50,7 @@ const NAV_ITEMS: ReadonlyArray<NavItem> = [
     MatIconModule,
     MatInputModule,
     MatSlideToggleModule,
+    RouterLink,
     AppBarComponent,
     BottomNavBarComponent,
     NavRailComponent,

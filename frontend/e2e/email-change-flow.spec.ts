@@ -95,7 +95,7 @@ test.describe('Email change flow', () => {
   test('confirm: no token in URL → missing state surface', async ({ page }) => {
     const pom = new ConfirmEmailChangePagePom(page);
     await pom.gotoWithoutToken();
-    await expect(pom.missing).toContainText('Missing token').or(pom.missing).first();
-    await expect(pom.missing).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Missing token' })).toBeVisible();
+    await expect(pom.missing).toContainText('needs a confirmation token');
   });
 });

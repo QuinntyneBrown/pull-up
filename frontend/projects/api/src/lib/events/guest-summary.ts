@@ -7,4 +7,5 @@ export interface GuestSummary {
   readonly displayName: string | null;
   readonly rsvpStatus: RsvpStatus | null;
   readonly note: string | null;
+  readonly invitationId: string;
 }

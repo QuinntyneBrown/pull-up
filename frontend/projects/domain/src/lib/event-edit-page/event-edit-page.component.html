@@ -1,0 +1,133 @@
+<div class="event-edit-page" data-pu="event-edit-page">
+  <pu-app-bar title="Edit event"></pu-app-bar>
+
+  <main class="event-edit-page__main">
+    @if (loading()) {
+      <p class="event-edit-page__loading" data-testid="edit-loading">Loading…</p>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="event-edit-page__form">
+        <mat-form-field appearance="fill" class="event-edit-page__field">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" data-testid="edit-title" />
+          @if (form.get('title')?.hasError('required') && form.get('title')?.touched) {
+            <mat-error>Title is required.</mat-error>
+          }
+          @if (form.get('title')?.hasError('maxlength')) {
+            <mat-error>Title must be 200 characters or less.</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="event-edit-page__row">
+          <mat-form-field appearance="fill" class="event-edit-page__field">
+            <mat-label>Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="datePicker"
+              formControlName="date"
+              [min]="today"
+              data-testid="edit-date"
+              readonly />
+            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+            @if (form.get('date')?.hasError('required') && form.get('date')?.touched) {
+              <mat-error>Date is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="event-edit-page__field">
+            <mat-label>Time</mat-label>
+            <input matInput type="time" formControlName="time" data-testid="edit-time" />
+            @if (form.get('time')?.hasError('required') && form.get('time')?.touched) {
+              <mat-error>Time is required.</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill" class="event-edit-page__field">
+          <mat-label>Location</mat-label>
+          <input matInput formControlName="location" data-testid="edit-location" />
+          @if (form.get('location')?.hasError('required') && form.get('location')?.touched) {
+            <mat-error>Location is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="event-edit-page__field">
+          <mat-label>Description (optional)</mat-label>
+          <textarea matInput formControlName="description" rows="3" data-testid="edit-description"></textarea>
+        </mat-form-field>
+
+        <section class="event-edit-page__options">
+          <h2 class="event-edit-page__section-title">Options</h2>
+          <mat-slide-toggle formControlName="allowPlusOne" data-testid="edit-allow-plus-one">
+            Allow +1 guests
+          </mat-slide-toggle>
+          <mat-slide-toggle formControlName="showGuestList" data-testid="edit-show-guest-list">
+            Show guest list to invitees
+          </mat-slide-toggle>
+        </section>
+
+        <section class="event-edit-page__invitees">
+          <h2 class="event-edit-page__section-title">Manage guests</h2>
+
+          @if (existingGuests().length > 0) {
+            <mat-chip-set class="event-edit-page__chips" data-testid="edit-existing-chips">
+              @for (guest of existingGuests(); track guest.invitationId) {
+                <mat-chip
+                  (removed)="removeExistingInvitee(guest.invitationId)"
+                  [disabled]="isRemoving(guest.invitationId)">
+                  {{ guest.displayName ?? guest.fullName ?? guest.email }}
+                  <button
+                    matChipRemove
+                    [attr.aria-label]="'Remove ' + (guest.displayName ?? guest.email)"
+                    data-testid="edit-remove-invitee">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+              }
+            </mat-chip-set>
+          }
+
+          <div class="event-edit-page__invitee-input-row">
+            <mat-form-field appearance="fill" class="event-edit-page__field--grow">
+              <mat-label>Add by email</mat-label>
+              <input
+                matInput
+                formControlName="inviteeInput"
+                type="email"
+                data-testid="edit-invitee-input"
+                (keydown.enter)="$event.preventDefault(); addInvitee()" />
+            </mat-form-field>
+            <button mat-stroked-button type="button" (click)="addInvitee()" data-testid="edit-invitee-add">
+              Add
+            </button>
+          </div>
+
+          @if (pendingInvitees().length > 0) {
+            <mat-chip-set class="event-edit-page__chips" data-testid="edit-pending-chips">
+              @for (invitee of pendingInvitees(); track invitee.email) {
+                <mat-chip (removed)="removePendingInvitee(invitee.email)">
+                  {{ invitee.email }}
+                  <button matChipRemove [attr.aria-label]="'Remove ' + invitee.email">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+              }
+            </mat-chip-set>
+          }
+        </section>
+
+        <div class="event-edit-page__actions">
+          <a mat-stroked-button [routerLink]="['/events', eventId]">Discard</a>
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="submitting()"
+            data-testid="edit-submit">
+            Save changes
+          </button>
+        </div>
+      </form>
+    }
+  </main>
+</div>

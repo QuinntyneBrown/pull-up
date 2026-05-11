@@ -1,36 +1,119 @@
-<div class="home-page">
-  <header class="home-page__app-bar">
-    <pu-brand-logo size="sm"></pu-brand-logo>
-    <span class="home-page__spacer"></span>
-    @if (user(); as u) {
-      <span class="home-page__avatar" [attr.title]="u.fullName" data-testid="home-avatar">
-        {{ u.displayName.charAt(0) }}
-      </span>
-    }
-  </header>
+<div class="home-page" data-pu="home-page">
+  <pu-app-bar title="Pull Up"></pu-app-bar>
 
-  <main class="home-page__content">
-    @if (loading()) {
-      <p class="home-page__loading" data-testid="home-loading">Loading your events…</p>
-    } @else if (errored()) {
-      <section class="home-page__error" data-testid="home-error">
-        <h2>We couldn't load your account</h2>
-        <p>Your session may have expired. Please sign in again.</p>
-        <button mat-flat-button color="primary" (click)="signOut()">Back to sign-up</button>
-      </section>
-    } @else if (user(); as u) {
-      <section class="home-page__welcome" data-testid="home-welcome">
-        <h1>Welcome, {{ u.displayName }}!</h1>
-        <p>You're signed in as {{ u.email }} ({{ u.role }}).</p>
-        <p>This is the MVP landing page — your upcoming events will appear here.</p>
-        <div class="home-page__actions">
-          <button mat-flat-button color="primary">
-            <mat-icon>add</mat-icon>
-            Create your first event
-          </button>
-          <button mat-stroked-button (click)="signOut()" data-testid="home-sign-out">Sign out</button>
-        </div>
-      </section>
-    }
-  </main>
+  <div class="home-page__shell">
+    <pu-nav-rail [items]="navItems" [activeRoute]="activeRoute"></pu-nav-rail>
+
+    <main class="home-page__main">
+      <div class="home-page__toolbar">
+        <pu-filter-strip
+          [chips]="filterChips"
+          [selectedKey]="selectedScope()"
+          (chipChange)="onScopeChange($event)"
+          data-testid="home-filter-strip">
+        </pu-filter-strip>
+
+        <a
+          mat-fab
+          extended
+          routerLink="/events/new"
+          class="home-page__fab"
+          aria-label="Create event"
+          data-testid="home-create-fab">
+          <mat-icon>add</mat-icon>
+          Create
+        </a>
+      </div>
+
+      @if (loading()) {
+        <pu-loading-skeleton [count]="4" data-testid="home-loading"></pu-loading-skeleton>
+      } @else if (errored()) {
+        <pu-error-state
+          title="Couldn't load events"
+          supportingText="Check your connection and try again."
+          (retry)="retry()"
+          data-testid="home-error">
+        </pu-error-state>
+      } @else if (!hasAnyEvents) {
+        <pu-empty-state
+          icon="event_available"
+          title="No events yet"
+          supportingText="Create your first event to get started."
+          data-testid="home-empty">
+        </pu-empty-state>
+      } @else {
+        @let eventGroups = events()!;
+
+        @if (eventGroups.thisWeek.length > 0) {
+          <section class="home-page__group" data-testid="home-group-this-week">
+            <h2 class="home-page__group-title">This week</h2>
+            @for (event of eventGroups.thisWeek; track event.id) {
+              <a class="home-page__card-link" [routerLink]="['/events', event.id]">
+                <pu-event-card
+                  [title]="event.title"
+                  [startsAtUtc]="toDate(event.startsAtUtc)"
+                  [location]="event.location"
+                  [isHost]="event.isHost"
+                  [myRsvpStatus]="event.myRsvpStatus">
+                </pu-event-card>
+              </a>
+            }
+          </section>
+        }
+
+        @if (eventGroups.laterThisMonth.length > 0) {
+          <section class="home-page__group" data-testid="home-group-later-this-month">
+            <h2 class="home-page__group-title">Later this month</h2>
+            @for (event of eventGroups.laterThisMonth; track event.id) {
+              <a class="home-page__card-link" [routerLink]="['/events', event.id]">
+                <pu-event-card
+                  [title]="event.title"
+                  [startsAtUtc]="toDate(event.startsAtUtc)"
+                  [location]="event.location"
+                  [isHost]="event.isHost"
+                  [myRsvpStatus]="event.myRsvpStatus">
+                </pu-event-card>
+              </a>
+            }
+          </section>
+        }
+
+        @if (eventGroups.nextMonth.length > 0) {
+          <section class="home-page__group" data-testid="home-group-next-month">
+            <h2 class="home-page__group-title">Next month</h2>
+            @for (event of eventGroups.nextMonth; track event.id) {
+              <a class="home-page__card-link" [routerLink]="['/events', event.id]">
+                <pu-event-card
+                  [title]="event.title"
+                  [startsAtUtc]="toDate(event.startsAtUtc)"
+                  [location]="event.location"
+                  [isHost]="event.isHost"
+                  [myRsvpStatus]="event.myRsvpStatus">
+                </pu-event-card>
+              </a>
+            }
+          </section>
+        }
+
+        @if (eventGroups.past.length > 0) {
+          <section class="home-page__group" data-testid="home-group-past">
+            <h2 class="home-page__group-title">Past</h2>
+            @for (event of eventGroups.past; track event.id) {
+              <a class="home-page__card-link" [routerLink]="['/events', event.id]">
+                <pu-event-card
+                  [title]="event.title"
+                  [startsAtUtc]="toDate(event.startsAtUtc)"
+                  [location]="event.location"
+                  [isHost]="event.isHost"
+                  [myRsvpStatus]="event.myRsvpStatus">
+                </pu-event-card>
+              </a>
+            }
+          </section>
+        }
+      }
+    </main>
+  </div>
+
+  <pu-bottom-nav-bar [items]="navItems" [activeRoute]="activeRoute"></pu-bottom-nav-bar>
 </div>

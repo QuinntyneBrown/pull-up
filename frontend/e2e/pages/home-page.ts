@@ -1,19 +1,22 @@
 import { expect, Locator, Page } from '@playwright/test';
 
 export class HomePagePom {
-  readonly welcome: Locator;
-  readonly avatar: Locator;
-  readonly signOut: Locator;
+  readonly filterStrip: Locator;
+  readonly createFab: Locator;
+  readonly loadingSkeleton: Locator;
+  readonly emptyState: Locator;
+  readonly errorState: Locator;
 
   constructor(private readonly page: Page) {
-    this.welcome = page.getByTestId('home-welcome');
-    this.avatar = page.getByTestId('home-avatar');
-    this.signOut = page.getByTestId('home-sign-out');
+    this.filterStrip = page.getByTestId('home-filter-strip');
+    this.createFab = page.getByTestId('home-create-fab');
+    this.loadingSkeleton = page.getByTestId('home-loading');
+    this.emptyState = page.getByTestId('home-empty');
+    this.errorState = page.getByTestId('home-error');
   }
 
-  async expectVisible(displayName: string): Promise<void> {
+  async expectVisible(): Promise<void> {
     await expect(this.page).toHaveURL(/\/home$/);
-    await expect(this.welcome).toBeVisible();
-    await expect(this.welcome).toContainText(`Welcome, ${displayName}!`);
+    await expect(this.filterStrip).toBeVisible();
   }
 }

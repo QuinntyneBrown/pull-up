@@ -105,7 +105,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** `email-change-flow.spec.ts` + two POMs (`ProfilePagePom` extension + `ConfirmEmailChangePagePom`) — request flow shows verification success snackbar; confirm page reads the token from the URL and on success the profile shows the new email.
 - **Guidance:** Frontend, Authentication.
 
-### FT-014: Delete account page — **L2-014, L2-015**
+### FT-014: Delete account page — **L2-014, L2-015** — **done**
 - **Slice contents:** new `delete-account-page` domain component reached from a destructive link on `ProfilePage`. Reactive form with current password + an "I understand" checkbox. Calls `PROFILE_SERVICE.deleteAccount(...)`. On 204 clears tokens (via `AuthService.signOut` semantics) and routes to `/sign-up` with a "Account deleted" snackbar. Route `/profile/delete`.
 - **Acceptance test:** `delete-account-flow.spec.ts` + `DeleteAccountPagePom` — wrong password keeps user on the page with an error; correct password navigates to /sign-up; subsequent attempt to call /me with the cleared bearer fails (via captured logger).
 - **Guidance:** Frontend, Authentication.
@@ -114,27 +114,27 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 
 ## E. Events pages (vertical slices)
 
-### FT-015: Home page full event list — **L2-022, L2-024, L2-025, L2-062, L2-063**
+### FT-015: Home page full event list — **L2-022, L2-024, L2-025, L2-062, L2-063** — **done**
 - **Slice contents:** replace MF1's welcome card with a full list view. Compose `AppBarComponent`, `BottomNavBarComponent`, `NavRailComponent`, `FilterStripComponent` (All / Hosting / Invited / Past), `EventCardComponent` per row, `LoadingSkeletonComponent` on load, `EmptyStateComponent` on zero results, `ErrorStateComponent` on fetch error. Calls `EVENTS_SERVICE.list(scope)`.
 - **Acceptance test:** extend `sign-up-flow.spec.ts` / new `home-list-flow.spec.ts` — after sign-up, mocked /api/events returns a populated grouped list; cards render in the right buckets; switching filter chips re-fetches with the new scope.
 - **Guidance:** Frontend, Library Structure, Testing.
 
-### FT-016: Event create page — **L2-018..L2-021, L2-031, L2-032**
+### FT-016: Event create page — **L2-018..L2-021, L2-031, L2-032** — **done**
 - **Slice contents:** new `event-create-page` domain component. Reactive form: title, date (M3 `mat-datepicker`), time, location, description, options toggles (allow +1, show guest list), invitees chip-input. Calls `EVENTS_SERVICE.create(...)`. On 201 routes to `/events/:id` of the new event. Route `/events/new`.
 - **Acceptance test:** `event-create-flow.spec.ts` + `EventCreatePagePom` — fill form, submit, mocked create returns 201 with id, page navigates to `/events/{id}` and detail fetches.
 - **Guidance:** Frontend, Library Structure.
 
-### FT-017: Event detail page (read + RSVP) — **L2-023, L2-034, L2-035, L2-036**
+### FT-017: Event detail page (read + RSVP) — **L2-023, L2-034, L2-035, L2-036** — **done**
 - **Slice contents:** new `event-detail-page` domain component composing `AppBarComponent` (back arrow + share/more icons), the hero card with title + date + time + location, the M3 `SegmentedButtonComponent` for "Your RSVP", description card, host card with name + initials, guest list driven by `GuestSummary[]` from `EventsService.get`. RSVP picker calls `EVENTS_SERVICE.setRsvp(...)` and refreshes counts. Route `/events/:id`.
 - **Acceptance test:** `event-rsvp-flow.spec.ts` + `EventDetailPagePom` — open detail, click Maybe, mocked PUT returns 204, count chips re-render; for a past event the RSVP segmented control is hidden.
 - **Guidance:** Frontend, Library Structure.
 
-### FT-018: Event cancel action — **L2-029, L2-030**
+### FT-018: Event cancel action — **L2-029, L2-030** — **done**
 - **Slice contents:** on `EventDetailPage`, host-only "Cancel event" `mat-stroked-button color="warn"` with a confirm `MatDialog`. Calls `EVENTS_SERVICE.cancel(id)`. On 204 reloads the event so the page reflects `Status=Cancelled` (banner / disabled RSVP).
 - **Acceptance test:** `event-cancel-flow.spec.ts` extension — host sees the Cancel button, clicks, confirms; the page renders the cancelled-status banner; non-host view does not show the button.
 - **Guidance:** Frontend, Library Structure.
 
-### FT-019: Event edit + invitee management — **L2-026, L2-027, L2-028, L2-031, L2-032, L2-033**
+### FT-019: Event edit + invitee management — **L2-026, L2-027, L2-028, L2-031, L2-032, L2-033** — **done**
 - **Slice contents:** new `event-edit-page` domain component reusing a presentational `event-form-component` (kept in `domain` because it binds to api DTOs by type) for the title/date/time/location/description/options form. Plus an invitee section with chip-input for adding (calls `EVENTS_SERVICE.addInvitee(...)`) and an `(x)` per chip for removing (calls `EVENTS_SERVICE.removeInvitee(...)`). Route `/events/:id/edit`. Host-only — the page reads `IsHost` from the detail fetch on mount and otherwise routes back to detail.
 - **Acceptance test:** `event-update-flow.spec.ts` + `EventEditPagePom` — host edits date, saves, redirects to detail, new date renders; host adds an invitee, chip appears; host removes invitee, chip disappears.
 - **Guidance:** Frontend, Library Structure, Authentication (host-only client-side gate + server-side 403).
@@ -143,7 +143,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 
 ## F. Cross-cutting test coverage
 
-### FT-020: Responsive viewport spec — **L2-051..L2-054**
+### FT-020: Responsive viewport spec — **L2-051..L2-054** — **done**
 - **Slice contents:** extend the existing 360-mobile assertion into a dedicated `responsive.spec.ts` that walks `/sign-in`, `/home`, `/events/{id}`, `/profile` at 360 / 768 / 1440 widths and asserts (a) the bottom nav-bar is visible <768 + hidden ≥768, (b) the nav-rail is visible ≥768 + hidden <768, (c) `document.documentElement.scrollWidth === clientWidth` (no horizontal overflow), (d) primary action button is in the viewport without scroll on each width.
 - **Acceptance test:** the spec itself (self-verifying).
 - **Guidance:** Frontend, Testing.

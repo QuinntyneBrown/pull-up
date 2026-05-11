@@ -20,9 +20,33 @@ export const routes: Routes = [
     loadComponent: () => import('domain').then(m => m.CompletePasswordResetPageComponent),
   },
   {
+    path: 'email-change/confirm',
+    loadComponent: () => import('domain').then(m => m.ConfirmEmailChangePageComponent),
+  },
+  {
     path: 'home',
     canActivate: [authGuard],
     loadComponent: () => import('domain').then(m => m.HomePageComponent),
+  },
+  {
+    path: 'events/new',
+    canActivate: [authGuard],
+    loadComponent: () => import('domain').then(m => m.EventCreatePageComponent),
+  },
+  {
+    path: 'events/:id/edit',
+    canActivate: [authGuard],
+    loadComponent: () => import('domain').then(m => m.EventEditPageComponent),
+  },
+  {
+    path: 'events/:id',
+    canActivate: [authGuard],
+    loadComponent: () => import('domain').then(m => m.EventDetailPageComponent),
+  },
+  {
+    path: 'profile/delete',
+    canActivate: [authGuard],
+    loadComponent: () => import('domain').then(m => m.DeleteAccountPageComponent),
   },
   {
     path: 'profile',
