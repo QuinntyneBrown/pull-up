@@ -73,7 +73,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `SignInRateLimitTests` — 5 wrong passwords for the same email return 401, the 6th returns 429 with `Retry-After: 60`; after the window expires, a correct password works.
 - **Depends on:** BT-006.
 
-### BT-008: `POST /api/auth/refresh`
+### BT-008: `POST /api/auth/refresh` — **DONE** (see `docs/evaluations/BI1-BT-008.md`)
 - **Implements:** L2-006.
 - **Slice:** new `RefreshAccessTokenCommand` + handler that looks up by token hash, validates not revoked / not expired, rotates (revoke old, issue new pair). Returns 401 on invalid/expired refresh.
 - **Acceptance test:** `RefreshAccessTokenTests` — sign in, swap the refresh token for new pair, old one becomes unusable, new one continues to work.

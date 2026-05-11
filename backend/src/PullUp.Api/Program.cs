@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Logging;
 using PullUp.Application;
 using PullUp.Application.Common.Exceptions;
+using PullUp.Application.Features.Users.RefreshAccessToken;
 using PullUp.Application.Features.Users.RegisterUser;
 using PullUp.Application.Features.Users.SignInUser;
 using PullUp.Infrastructure;
@@ -83,6 +84,15 @@ app.UseExceptionHandler(handler =>
                     Status = StatusCodes.Status401Unauthorized,
                     Title = "Invalid credentials",
                     Detail = invalid.Message,
+                });
+                break;
+            case InvalidRefreshTokenException invalidRefresh:
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                await context.Response.WriteAsJsonAsync(new ProblemDetails
+                {
+                    Status = StatusCodes.Status401Unauthorized,
+                    Title = "Invalid refresh token",
+                    Detail = invalidRefresh.Message,
                 });
                 break;
             case SignInRateLimitExceededException locked:
