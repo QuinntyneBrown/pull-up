@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
+using PullUp.Application.Features.Events.CancelEvent;
 using PullUp.Application.Features.Events.CreateEvent;
 using PullUp.Application.Features.Events.GetEvent;
 using PullUp.Application.Features.Events.ListMyEvents;
@@ -62,5 +63,16 @@ public sealed class EventsController : ControllerBase
     {
         var response = await _mediator.Send(new GetEventQuery(id), cancellationToken);
         return Ok(response);
+    }
+
+    [HttpPost("{id:guid}/cancel")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Cancel(Guid id, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new CancelEventCommand(id), cancellationToken);
+        return NoContent();
     }
 }

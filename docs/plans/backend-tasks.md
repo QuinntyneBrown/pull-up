@@ -137,13 +137,13 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Slice:** `ListMyEventsQuery` accepting scope filter (`All`/`Hosting`/`Invited`/`Past`). Handler joins Events ↔ Invitations ↔ Rsvps for the current user and projects to a flat DTO with `thisWeek`, `laterThisMonth`, `nextMonth`, `past` groupings using `AsNoTracking()`. `EventsController.List`.
 - **Acceptance test:** `ListMyEventsTests` — seed events across windows; assert correct grouping; `scope=Hosting` only returns hosted; `scope=Past` returns reverse-chronological events older than today.
 
-### BT-018: `GET /api/events/{id}` + host/invitee authorization (and `CancelEvent` reuse)
+### BT-018: `GET /api/events/{id}` + host/invitee authorization (and `CancelEvent` reuse) — **DONE** (see `docs/evaluations/BI1-BT-018.md` for GET, `docs/evaluations/BI1-BT-019.md` for Cancel)
 - **Implements:** L2-023, L2-027, L2-029, L2-030, L2-036.
 - **Slice:** `GetEventQuery` returning host details, guest list (respecting `Event.ShowGuestList`), aggregate RSVP counts, current-user RSVP, host-actions flag. Authorization: 403 unless caller is host or has an unrevoked invitation. `CancelEventCommand` (host-only, sets `Status=Cancelled`, audits, dispatches cancellation notifications via `DispatchInvitationNotification` with kind `EventCancelled`).
 - **Acceptance test:** `GetEventTests` + `CancelEventTests` — non-invited user → 403; host sees guest list + actions; invited user without `ShowGuestList` sees aggregate counts only; host cancellation flips status and produces notification log entries for every invitee with `NewInvitations=on`.
 - **Depends on:** BT-001, BT-016, BT-019.
 
-### BT-019: `DispatchInvitationNotification` + `INotificationSender`
+### BT-019: `DispatchInvitationNotification` + `INotificationSender` — **DONE** (see `docs/evaluations/BI1-BT-019.md`)
 - **Implements:** L2-028, L2-030, L2-037.
 - **Slice:** new `INotificationSender` (Application) + `LoggingNotificationSender` (Infrastructure no-op). New `DispatchInvitationNotificationCommand` taking `(eventId, recipientUserId, kind)`; handler reads the recipient's `NotificationPreference`, gates on `NewInvitations`, calls `INotificationSender`. Reusable by `CreateEvent` (on each invitee), `AddInvitee`, `UpdateEvent` (date/time/location change), `CancelEvent`.
 - **Acceptance test:** `DispatchInvitationNotificationTests` — recipient with `NewInvitations=off` does not receive; recipient with on does; passes the correct kind to the sender.

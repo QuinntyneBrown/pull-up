@@ -43,6 +43,7 @@ public static class DependencyInjection
         services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
         services.AddSingleton<IAuditLogger, AuditLogger>();
         services.AddSingleton<IEmailSender, LoggingEmailSender>();
+        services.AddSingleton<INotificationSender, LoggingNotificationSender>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
         services.AddSingleton<ITokenHasher, HmacTokenHasher>();
