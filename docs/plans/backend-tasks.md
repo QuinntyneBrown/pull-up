@@ -127,7 +127,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 
 ## D. Events feature
 
-### BT-016: Event entity + schema + create slice
+### BT-016: Event entity + schema + create slice — **DONE** (see `docs/evaluations/BI1-BT-016.md`)
 - **Implements:** L2-018, L2-019, L2-020, L2-021.
 - **Slice:** new entities `Events/Event`, `Events/EventStatus`, `Events/Invitation`, `Events/Rsvp`, `Events/RsvpStatus` (one file each) + EF configs + migration `AddEventsAndInvitations` and `AddRsvps`. New `CreateEventCommand` + handler that persists Event + initial Invitations + host self-RSVP (`Going`) in one transaction. Validator: title 1–120, location 1–200, description 0–2000, date today-or-later, time HH:MM. `EventsController.Create`.
 - **Acceptance test:** `CreateEventTests` — happy path returns 201 with new event id; past date → 400 `code=PAST_DATE`; over-length title → 400; no invitees still creates event with host as sole going member.

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PullUp.Domain.Audit;
+using PullUp.Domain.Events;
 using PullUp.Domain.Notifications;
 using PullUp.Domain.Users;
 
@@ -11,6 +12,9 @@ public interface IAppDbContext
     DbSet<RefreshToken> RefreshTokens { get; }
     DbSet<PasswordResetToken> PasswordResetTokens { get; }
     DbSet<NotificationPreference> NotificationPreferences { get; }
+    DbSet<Event> Events { get; }
+    DbSet<Invitation> Invitations { get; }
+    DbSet<Rsvp> Rsvps { get; }
     DbSet<AuditLogEntry> AuditLog { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
