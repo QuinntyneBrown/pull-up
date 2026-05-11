@@ -35,12 +35,34 @@ async function ensureOutDir() {
   }
 }
 
+// Playwright fullPage screenshots capture position:fixed / position:sticky elements at their
+// initial viewport position, then content extends below — causing the bottom nav bar to overlap
+// content mid-page and the side nav rail to span only the first viewport. This stylesheet
+// flattens those elements so a single tall image conveys the design accurately. It is only
+// applied at screenshot time; the live mocks themselves keep their real fixed/sticky behavior.
+const SCREENSHOT_SHIM = `
+  html, body { height: auto !important; }
+  body { position: relative !important; }
+  .app-bar { position: static !important; }
+  .layout { align-items: stretch !important; }
+  .nav-rail { position: static !important; height: auto !important; align-self: stretch !important; }
+  .nav-bar { position: static !important; }
+  .fab {
+    position: static !important;
+    display: flex !important;
+    width: fit-content !important;
+    margin: 24px auto !important;
+  }
+  .page { padding-bottom: 24px !important; }
+`;
+
 async function renderOne(browser, htmlPath, viewport) {
   const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } });
   const page = await context.newPage();
   const url = pathToFileURL(htmlPath).href;
   await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-  // Give web fonts a moment to settle (already covered by networkidle, but belt-and-suspenders).
+  await page.addStyleTag({ content: SCREENSHOT_SHIM });
+  // Wait briefly for web fonts and the shim to settle.
   await page.waitForTimeout(250);
 
   const name = basename(htmlPath, '.html');
