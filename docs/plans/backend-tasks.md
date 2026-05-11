@@ -91,7 +91,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `RequestPasswordResetTests` — submitting a known and unknown email both return 202 with identical timing class; only the known email writes a `PasswordResetToken` row and triggers `LoggingEmailSender`.
 - **Depends on:** BT-005 (for `ITokenHasher`).
 
-### BT-011: `POST /api/auth/password-reset/confirm` (complete reset)
+### BT-011: `POST /api/auth/password-reset/confirm` (complete reset) — **DONE** (see `docs/evaluations/BI1-BT-011.md`)
 - **Implements:** L2-003, L2-009, L2-010.
 - **Slice:** `CompletePasswordResetCommand` validates the supplied raw token against stored hash, expiry, and unused flag; updates password; revokes **all** refresh tokens for that user; marks the reset token used; audits `PASSWORD_RESET_COMPLETED`.
 - **Acceptance test:** `CompletePasswordResetTests` — request reset, complete it with the captured token, sign in with the new password; using the same token a second time returns 400; expired tokens return 400.

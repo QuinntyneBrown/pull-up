@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
+using PullUp.Application.Features.Users.CompletePasswordReset;
 using PullUp.Application.Features.Users.RefreshAccessToken;
 using PullUp.Application.Features.Users.RequestPasswordReset;
 using PullUp.Application.Features.Users.SignInUser;
@@ -66,5 +67,16 @@ public sealed class AuthController : ControllerBase
     {
         await _mediator.Send(new RequestPasswordResetCommand(request.Email), cancellationToken);
         return Accepted();
+    }
+
+    [HttpPost("password-reset/confirm")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CompletePasswordReset(
+        [FromBody] CompletePasswordResetRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new CompletePasswordResetCommand(request.Token, request.NewPassword), cancellationToken);
+        return NoContent();
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Logging;
 using PullUp.Application;
 using PullUp.Application.Common.Exceptions;
+using PullUp.Application.Features.Users.CompletePasswordReset;
 using PullUp.Application.Features.Users.RefreshAccessToken;
 using PullUp.Application.Features.Users.RegisterUser;
 using PullUp.Application.Features.Users.SignInUser;
@@ -93,6 +94,15 @@ app.UseExceptionHandler(handler =>
                     Status = StatusCodes.Status401Unauthorized,
                     Title = "Invalid refresh token",
                     Detail = invalidRefresh.Message,
+                });
+                break;
+            case InvalidPasswordResetTokenException invalidReset:
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsJsonAsync(new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Invalid password-reset token",
+                    Detail = invalidReset.Message,
                 });
                 break;
             case SignInRateLimitExceededException locked:
