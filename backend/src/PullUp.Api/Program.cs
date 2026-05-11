@@ -85,6 +85,16 @@ app.UseExceptionHandler(handler =>
                     Detail = invalid.Message,
                 });
                 break;
+            case SignInRateLimitExceededException locked:
+                context.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                context.Response.Headers["Retry-After"] = locked.RetryAfterSeconds.ToString();
+                await context.Response.WriteAsJsonAsync(new ProblemDetails
+                {
+                    Status = StatusCodes.Status429TooManyRequests,
+                    Title = "Too many sign-in attempts",
+                    Detail = locked.Message,
+                });
+                break;
             case NotAuthorizedException notAuth:
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
                 await context.Response.WriteAsJsonAsync(new ProblemDetails

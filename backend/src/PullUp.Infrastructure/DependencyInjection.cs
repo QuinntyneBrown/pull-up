@@ -46,6 +46,9 @@ public static class DependencyInjection
         services.AddSingleton<ITokenHasher, HmacTokenHasher>();
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
+        services.AddMemoryCache();
+        services.AddSingleton<ISignInRateLimiter, SignInRateLimiter>();
+
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
 

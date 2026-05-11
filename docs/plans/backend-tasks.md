@@ -67,7 +67,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `SignInUserTests` — happy path returns 200 + tokens that work against `/api/users/me`; wrong password returns 401 with generic message; unknown email returns 401 with the same generic message (no enumeration).
 - **Depends on:** BT-002, BT-005.
 
-### BT-007: Failed-sign-in rate limiting (`ISignInRateLimiter`)
+### BT-007: Failed-sign-in rate limiting (`ISignInRateLimiter`) — **DONE** (see `docs/evaluations/BI1-BT-007.md`)
 - **Implements:** L2-042.
 - **Slice:** new `ISignInRateLimiter` (Application) + `SignInRateLimiter` (Infrastructure) backed by `IMemoryCache`. Tracks `email → attempts within 60 s`. `SignInUserCommand` handler calls `EnsureNotLocked(email)` first; failures call `RegisterFailedAttempt(email)`. Threshold: 5 attempts → HTTP 429 with `Retry-After: 60`.
 - **Acceptance test:** `SignInRateLimitTests` — 5 wrong passwords for the same email return 401, the 6th returns 429 with `Retry-After: 60`; after the window expires, a correct password works.
