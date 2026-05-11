@@ -33,7 +33,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `AuthorizationBehaviorTests` — a fake request implementing `IAuthorizationRequirement` is rejected; one without the marker is allowed; an authorized request flows through.
 - **Guidance:** SOLID, no temp code, one type per file, FluentValidation untouched.
 
-### BT-002: Auditing behavior + `AuditedAction` attribute + `IAuditLogger`
+### BT-002: Auditing behavior + `AuditedAction` attribute + `IAuditLogger` — **DONE** (see `docs/evaluations/BI1-BT-002.md`)
 - **Implements:** L2-005, L2-010, L2-043, L2-060, L2-061.
 - **Slice:** new `[AuditedAction("SIGN_IN_FAILURE")]`-style attribute on request types; `AuditingBehavior` writes a row via `IAuditLogger` (new abstraction in Application, implementation `AuditLogger` in Infrastructure writing to `AppDbContext.AuditLog`). On exceptions thrown from the handler, behavior records `outcome=FAILURE` and rethrows. Adds entity `AuditLogEntry` + `IEntityTypeConfiguration<AuditLogEntry>` + EF migration `AddAuditLog`.
 - **Acceptance test:** `AuditLoggerTests` — registering a user writes a `SIGN_UP_SUCCESS` row with the actor id; a failed login writes `SIGN_IN_FAILURE` with the email and a `FAILURE` outcome.
