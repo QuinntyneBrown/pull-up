@@ -81,7 +81,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** `frontend/e2e/sign-in-flow.spec.ts` + `pages/sign-in-page.ts` — happy path stores tokens and navigates to home; wrong creds shows the generic 401 message and stays on /sign-in.
 - **Guidance:** Frontend, Library Structure (domain), Authentication, Testing.
 
-### FT-010: Password-reset flow — **L2-008, L2-009, L2-003**
+### FT-010: Password-reset flow — **L2-008, L2-009, L2-003** — **done**
 - **Slice contents:** new `request-password-reset-page` + `complete-password-reset-page` domain components. `RequestPasswordResetPage` always shows the same "If an account exists…" success state after submit. `CompletePasswordResetPage` reads `?token=` from the URL, requires the new password + complexity rules. Routes `/password-reset` and `/password-reset/confirm`.
 - **Acceptance test:** `password-reset-flow.spec.ts` + two POMs — request submission shows the universal success state; confirm with a token transitions to `/sign-in` with a snackbar; confirm with a stale token surfaces the 400 error.
 - **Guidance:** Frontend, Authentication.
