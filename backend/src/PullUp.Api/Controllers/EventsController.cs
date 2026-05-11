@@ -8,6 +8,7 @@ using PullUp.Application.Features.Events.CreateEvent;
 using PullUp.Application.Features.Events.GetEvent;
 using PullUp.Application.Features.Events.ListMyEvents;
 using PullUp.Application.Features.Events.RemoveInvitee;
+using PullUp.Application.Features.Events.SetRsvp;
 using PullUp.Application.Features.Events.UpdateEvent;
 
 namespace PullUp.Api.Controllers;
@@ -129,6 +130,22 @@ public sealed class EventsController : ControllerBase
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new RemoveInviteeCommand(id, invitationId), cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPut("{id:guid}/rsvp")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> SetRsvp(
+        Guid id,
+        [FromBody] SetRsvpRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new SetRsvpCommand(id, request.Status, request.Note), cancellationToken);
         return NoContent();
     }
 }

@@ -160,7 +160,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `InviteeManagementTests` — host adds existing user → invitation created → notification dispatched; host adds unknown email → email-only invitation stored; host removes invitee → existing RSVP cleared; non-host attempts → 403.
 - **Depends on:** BT-001, BT-016, BT-019.
 
-### BT-022: `PUT /api/events/{id}/rsvp` (Set/Update RSVP)
+### BT-022: `PUT /api/events/{id}/rsvp` (Set/Update RSVP) — **DONE** (see `docs/evaluations/BI1-BT-022.md`)
 - **Implements:** L2-034, L2-035, L2-036, L2-039.
 - **Slice:** `SetRsvpCommand` invitee-only; upserts `Rsvp(Going/Maybe/CantGo, [Note?])`; rejects with 409 `code=EVENT_PASSED` if `StartsAtUtc < now`; dispatches `DispatchRsvpChangeNotification` (new MediatR command) gated on host's `RsvpChanges` preference.
 - **Acceptance test:** `SetRsvpTests` — invitee can set; updates update aggregate counts; past event returns 409 + UI doesn't surface control (frontend concern out of backend test scope); host with `RsvpChanges=on` sees notification dispatched.

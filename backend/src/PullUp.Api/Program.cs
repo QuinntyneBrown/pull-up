@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Logging;
 using PullUp.Application;
 using PullUp.Application.Common.Exceptions;
+using PullUp.Application.Features.Events.SetRsvp;
 using PullUp.Application.Features.Users.CompletePasswordReset;
 using PullUp.Application.Features.Users.ConfirmEmailChange;
 using PullUp.Application.Features.Users.RefreshAccessToken;
@@ -74,6 +75,16 @@ app.UseExceptionHandler(handler =>
                     Title = "Duplicate email",
                     Detail = dup.Message,
                     Type = "https://pullup.example/errors/duplicate-email"
+                });
+                break;
+            case EventAlreadyPassedException passed:
+                context.Response.StatusCode = StatusCodes.Status409Conflict;
+                await context.Response.WriteAsJsonAsync(new ProblemDetails
+                {
+                    Status = StatusCodes.Status409Conflict,
+                    Title = "Event has already passed",
+                    Detail = passed.Message,
+                    Type = "https://pullup.example/errors/event-passed",
                 });
                 break;
             case UnauthorizedAccessException:
