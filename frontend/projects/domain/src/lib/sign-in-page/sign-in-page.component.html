@@ -1,0 +1,51 @@
+<main class="sign-in-page">
+  <section class="sign-in-page__card">
+    <header class="sign-in-page__brand">
+      <pu-brand-logo></pu-brand-logo>
+    </header>
+
+    <h1 class="sign-in-page__heading">Sign in</h1>
+    <p class="sign-in-page__sub">Welcome back. Sign in to host events and reply to invites.</p>
+
+    <form class="sign-in-page__form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <mat-form-field appearance="fill" class="sign-in-page__field">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" autocomplete="email" data-testid="signin-email" />
+        @if (email.touched && email.errors?.['email']) {
+          <mat-error>Enter a valid email address.</mat-error>
+        }
+        @if (email.touched && email.errors?.['required']) {
+          <mat-error>Email is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="sign-in-page__field">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" autocomplete="current-password" data-testid="signin-password" />
+        @if (password.touched && password.errors?.['required']) {
+          <mat-error>Password is required.</mat-error>
+        }
+      </mat-form-field>
+
+      @if (serverError()) {
+        <p class="sign-in-page__server-error" data-testid="signin-server-error">{{ serverError() }}</p>
+      }
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        class="sign-in-page__submit"
+        data-testid="signin-submit"
+        [disabled]="submitting()"
+      >
+        {{ submitting() ? 'Signing in…' : 'Sign in' }}
+      </button>
+
+      <div class="sign-in-page__links">
+        <a routerLink="/password-reset" data-testid="signin-forgot">Forgot password?</a>
+        <a routerLink="/sign-up" data-testid="signin-signup">Create an account</a>
+      </div>
+    </form>
+  </section>
+</main>

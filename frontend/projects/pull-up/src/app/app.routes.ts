@@ -8,6 +8,10 @@ export const routes: Routes = [
     loadComponent: () => import('domain').then(m => m.SignUpPageComponent),
   },
   {
+    path: 'sign-in',
+    loadComponent: () => import('domain').then(m => m.SignInPageComponent),
+  },
+  {
     path: 'home',
     canActivate: [authGuard],
     loadComponent: () => import('domain').then(m => m.HomePageComponent),
