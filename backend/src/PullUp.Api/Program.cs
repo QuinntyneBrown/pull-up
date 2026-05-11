@@ -79,6 +79,15 @@ app.UseExceptionHandler(handler =>
             case UnauthorizedAccessException:
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 break;
+            case NotFoundException notFound:
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                await context.Response.WriteAsJsonAsync(new ProblemDetails
+                {
+                    Status = StatusCodes.Status404NotFound,
+                    Title = "Not found",
+                    Detail = notFound.Message,
+                });
+                break;
             case InvalidCredentialsException invalid:
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 await context.Response.WriteAsJsonAsync(new ProblemDetails
