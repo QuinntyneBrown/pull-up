@@ -21,6 +21,7 @@ export interface IAuthService {
   completePasswordReset(request: CompletePasswordResetRequest): Observable<void>;
   refresh(refreshToken: string): Observable<RefreshAccessTokenResponse>;
   signOut(): Observable<void>;
+  clearSession(): void;
   snapshotAccessToken(): string | null;
   snapshotRefreshToken(): string | null;
 }

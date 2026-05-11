@@ -75,19 +75,20 @@ export class AuthService implements IAuthService {
   signOut(): Observable<void> {
     return defer(() => {
       const refreshToken = this.storage.getRefreshToken();
-      const clearLocal = () => {
-        this.storage.clear();
-        this.accessToken.next(null);
-        this.currentUser.next(null);
-      };
       if (!refreshToken) {
-        clearLocal();
+        this.clearSession();
         return of(void 0);
       }
       return this.http
         .post<void>(`${this.baseUrl}/api/auth/sign-out`, { refreshToken })
-        .pipe(tap({ next: clearLocal, error: clearLocal }));
+        .pipe(tap({ next: () => this.clearSession(), error: () => this.clearSession() }));
     });
+  }
+
+  clearSession(): void {
+    this.storage.clear();
+    this.accessToken.next(null);
+    this.currentUser.next(null);
   }
 
   snapshotAccessToken(): string | null {

@@ -43,7 +43,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** `events.service.spec.ts` — one TestBed case per method.
 - **Guidance:** Frontend, Library Structure (api).
 
-### FT-004: Interceptor 401-refresh + error interceptor + app providers — *enables* L2-006
+### FT-004: Interceptor 401-refresh + error interceptor + app providers — *enables* L2-006 — **done**
 - **Slice contents:** extend `auth-jwt.interceptor.ts` so a 401 response triggers exactly one `AuthService.refresh(refreshToken)` retry; on refresh failure clear tokens + redirect to `/sign-in`. New `error.interceptor.ts` surfaces non-form errors via `MatSnackBar`. Update `app.config.ts` to provide `PROFILE_SERVICE` + `EVENTS_SERVICE` tokens and register both interceptors.
 - **Acceptance test:** `auth-jwt-interceptor.spec.ts` (TestBed + `HttpTestingController`): a 401 on a protected endpoint triggers exactly one refresh attempt; on refresh success the original request is retried with the new bearer; on refresh failure tokens are cleared and `/sign-in` is navigated to.
 - **Guidance:** Frontend, Authentication.
