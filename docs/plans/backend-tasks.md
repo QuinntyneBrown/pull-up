@@ -101,7 +101,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 
 ## C. User profile / account (Users feature)
 
-### BT-012: `PUT /api/users/me/profile` (edit name + display name)
+### BT-012: `PUT /api/users/me/profile` (edit name + display name) — **DONE** (see `docs/evaluations/BI1-BT-012.md`)
 - **Implements:** L2-012.
 - **Slice:** `UpdateProfileCommand` + handler + validator (fullName 1–100, displayName 1–40). `UsersController.UpdateProfile`.
 - **Acceptance test:** `UpdateProfileTests` — valid update → 200 + updated values reflected on `/me`; empty fullName → 400; over-length → 400.

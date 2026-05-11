@@ -36,4 +36,14 @@ public sealed class User
         PasswordHash = newPasswordHash;
         LastPasswordChangedAt = now;
     }
+
+    public void UpdateProfile(string fullName, string displayName)
+    {
+        var trimmedFullName = fullName.Trim();
+        var trimmedDisplayName = displayName.Trim();
+        ArgumentException.ThrowIfNullOrEmpty(trimmedFullName);
+        ArgumentException.ThrowIfNullOrEmpty(trimmedDisplayName);
+        FullName = trimmedFullName;
+        DisplayName = trimmedDisplayName;
+    }
 }

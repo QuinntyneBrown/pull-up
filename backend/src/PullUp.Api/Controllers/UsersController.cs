@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
 using PullUp.Application.Features.Users.GetCurrentUser;
 using PullUp.Application.Features.Users.RegisterUser;
+using PullUp.Application.Features.Users.UpdateProfile;
 
 namespace PullUp.Api.Controllers;
 
@@ -41,5 +42,18 @@ public sealed class UsersController : ControllerBase
     {
         var response = await _mediator.Send(new GetCurrentUserQuery(), cancellationToken);
         return Ok(response);
+    }
+
+    [HttpPut("me/profile")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> UpdateProfile(
+        [FromBody] UpdateProfileRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new UpdateProfileCommand(request.FullName, request.DisplayName), cancellationToken);
+        return NoContent();
     }
 }
