@@ -1,0 +1,13 @@
+<div class="avatar-stack" data-pu="avatar-stack" [attr.aria-label]="entries.length + ' guests'">
+  @for (entry of visible; track $index) {
+    <span class="avatar-stack__avatar"
+          [class.avatar-stack__avatar--primary]="entry.tone === 'primary'"
+          [class.avatar-stack__avatar--secondary]="entry.tone === 'secondary'"
+          [class.avatar-stack__avatar--tertiary]="entry.tone === 'tertiary'">
+      {{ entry.initials }}
+    </span>
+  }
+  @if (overflowCount > 0) {
+    <span class="avatar-stack__overflow" data-pu="avatar-stack__overflow">+{{ overflowCount }}</span>
+  }
+</div>

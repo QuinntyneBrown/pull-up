@@ -1,0 +1,29 @@
+<article class="event-card" data-pu="event-card">
+  <header class="event-card__header">
+    <h2 class="event-card__title">{{ title }}</h2>
+    @if (isHost) {
+      <span class="event-card__host-badge" data-pu="event-card__host-badge">Host</span>
+    }
+  </header>
+
+  <div class="event-card__meta">
+    <span class="event-card__when">
+      <mat-icon class="event-card__icon" aria-hidden="true">event</mat-icon>
+      <time [attr.datetime]="startsAtUtc.toISOString()">
+        {{ startsAtUtc | date:'EEE, MMM d · h:mm a' }}
+      </time>
+    </span>
+    <span class="event-card__where">
+      <mat-icon class="event-card__icon" aria-hidden="true">place</mat-icon>
+      <span>{{ location }}</span>
+    </span>
+  </div>
+
+  @if (statusLabel) {
+    <footer class="event-card__footer">
+      <span class="event-card__rsvp-badge" [class]="statusModifier" data-pu="event-card__rsvp-badge">
+        {{ statusLabel }}
+      </span>
+    </footer>
+  }
+</article>

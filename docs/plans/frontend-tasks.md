@@ -57,7 +57,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** Playwright responsive smoke (lands later in FT-020) verifies the swap at 768px; component-level inspection by composition in band D / E / F pages.
 - **Guidance:** Frontend, Library Structure (components imports nothing from api / domain).
 
-### FT-006: Event card + RSVP avatar stack — *enables* L2-022, L2-023
+### FT-006: Event card + RSVP avatar stack — *enables* L2-022, L2-023 — **done**
 - **Slice contents:** `event-card/event-card.component.{ts,html,scss}` takes **primitive inputs only** (`title: string`, `startsAtUtc: Date`, `location: string`, `isHost: boolean`, `myRsvpStatus: 'Going' | 'Maybe' | 'CantGo' | null`) so the `components` library imports nothing from `api`. The consuming page (FT-015 home, FT-017 detail) maps `EventSummary` → these primitives. `rsvp-avatar-stack/rsvp-avatar-stack.component.{ts,html,scss}` takes an array of `{ initials: string; tone: 'primary' | 'secondary' | 'tertiary' }` — also primitives.
 - **Acceptance test:** indirectly verified by FT-015 (home flow uses event cards) and FT-017 (event detail uses avatar stack).
 - **Guidance:** Frontend, Library Structure (components imports nothing from api/domain — verified by import grep in FT2 + FI1 evals). The "primitive inputs only" rule mirrors how `EventFormComponent` is placed in `domain` because **it** binds to api DTOs — same logic in reverse here keeps `components` clean.
