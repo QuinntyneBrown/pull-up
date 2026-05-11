@@ -55,7 +55,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 
 ## B. Authentication & session (Auth feature)
 
-### BT-005: Refresh-token storage + token hasher
+### BT-005: Refresh-token storage + token hasher — **DONE** (see `docs/evaluations/BI1-BT-005.md`)
 - **Implements:** Foundation for L2-006, L2-007, L2-009, L2-040, L2-044.
 - **Slice:** new entity `Users/RefreshToken` (+ config + EF migration `AddRefreshTokens`); new `ITokenHasher` (Application) and `Pbkdf2TokenHasher` (Infrastructure) using HMAC-SHA-256 with a server-side pepper read from `Jwt:TokenHasherPepper`; new `Infrastructure/Security/RefreshTokenGenerator` (256-bit random); extension to `IJwtTokenService.IssueRefreshToken(User)` returning `(string raw, RefreshToken record)`.
 - **Acceptance test:** `RefreshTokenStoreTests` — generates a refresh token, persists the hash, verifies the raw value hashes to the same row, and confirms a revoked token cannot be looked up.
