@@ -2,10 +2,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
+using PullUp.Application.Features.Events.AddInvitee;
 using PullUp.Application.Features.Events.CancelEvent;
 using PullUp.Application.Features.Events.CreateEvent;
 using PullUp.Application.Features.Events.GetEvent;
 using PullUp.Application.Features.Events.ListMyEvents;
+using PullUp.Application.Features.Events.RemoveInvitee;
 using PullUp.Application.Features.Events.UpdateEvent;
 
 namespace PullUp.Api.Controllers;
@@ -98,6 +100,35 @@ public sealed class EventsController : ControllerBase
             request.AllowPlusOne,
             request.ShowGuestList);
         await _mediator.Send(command, cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPost("{id:guid}/invitees")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AddInvitee(
+        Guid id,
+        [FromBody] AddInviteeRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new AddInviteeCommand(id, request.Email), cancellationToken);
+        return NoContent();
+    }
+
+    [HttpDelete("{id:guid}/invitees/{invitationId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RemoveInvitee(
+        Guid id,
+        Guid invitationId,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new RemoveInviteeCommand(id, invitationId), cancellationToken);
         return NoContent();
     }
 }

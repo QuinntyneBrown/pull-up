@@ -154,7 +154,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `UpdateEventTests` — host can edit; non-host returns 403; editing date triggers notifications; editing only description does not.
 - **Depends on:** BT-001, BT-016, BT-019.
 
-### BT-021: Invitee management — `AddInvitee` / `RemoveInvitee`
+### BT-021: Invitee management — `AddInvitee` / `RemoveInvitee` — **DONE** (see `docs/evaluations/BI1-BT-021.md`)
 - **Implements:** L2-031, L2-032, L2-033, L2-037.
 - **Slice:** `AddInviteeCommand` host-only; matches existing user by email or creates email-only `Invitation`. `RemoveInviteeCommand` sets `Invitation.RemovedAt` and clears any existing `Rsvp`. Both audit-eligible.
 - **Acceptance test:** `InviteeManagementTests` — host adds existing user → invitation created → notification dispatched; host adds unknown email → email-only invitation stored; host removes invitee → existing RSVP cleared; non-host attempts → 403.
