@@ -43,6 +43,8 @@ All entity types stay in their own files; navigation properties between aggregat
 
 ## 3. `IAppDbContext` and persistence
 
+**Local + production database**: Microsoft SQL Server, with **SQL Server Express (SQLEXPRESS)** as the canonical local-development instance per the Implementation Guidance. The local connection string `Server=.\SQLEXPRESS;Database=PullUp;Trusted_Connection=True;TrustServerCertificate=True;` is committed in `backend/src/PullUp.Api/appsettings.Development.json` (already in place from MB1). No LocalDB, no Docker SQL Server, no in-memory provider for local development; SQLite is used **only** by `PullUp.Api.IntegrationTests` via the `Database:Provider=Sqlite` opt-in introduced in MB2. Higher environments override the connection string via configuration.
+
 Extend `IAppDbContext` to expose the new aggregate roots:
 
 ```csharp
