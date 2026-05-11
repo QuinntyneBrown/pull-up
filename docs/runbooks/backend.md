@@ -21,8 +21,8 @@ The JWT signing key is a 64-byte development-only value in the same file; replac
 From the repo root:
 
 ```
-dotnet restore PullUp.sln
-dotnet build PullUp.sln -c Release
+dotnet restore backend\PullUp.sln
+dotnet build backend\PullUp.sln -c Release
 dotnet ef database update --project backend/src/PullUp.Infrastructure --startup-project backend/src/PullUp.Api
 ```
 

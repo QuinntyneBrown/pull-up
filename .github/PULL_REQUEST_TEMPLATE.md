@@ -12,7 +12,7 @@ Describe what changed and why.
 
 ## Validation
 
-- [ ] Backend tests (`dotnet test PullUp.sln -c Release`)
+- [ ] Backend tests (`dotnet test backend\PullUp.sln -c Release`)
 - [ ] Frontend unit tests (`cd frontend && npm test`)
 - [ ] Frontend e2e tests (`cd frontend && npm run e2e`)
 

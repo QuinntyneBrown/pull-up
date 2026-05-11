@@ -13,8 +13,8 @@ Thanks for contributing. This document explains the workflow for issues, branche
 ### Backend
 
 ```powershell
-dotnet restore PullUp.sln
-dotnet build PullUp.sln -c Release
+dotnet restore backend\PullUp.sln
+dotnet build backend\PullUp.sln -c Release
 dotnet tool install --global dotnet-ef --version 10.0.*
 dotnet ef database update --project backend/src/PullUp.Infrastructure --startup-project backend/src/PullUp.Api
 dotnet run --project backend/src/PullUp.Api
@@ -44,7 +44,7 @@ Before opening a PR, ensure:
 3. Relevant tests pass locally:
 
 ```powershell
-dotnet test PullUp.sln -c Release
+dotnet test backend\PullUp.sln -c Release
 cd frontend
 npm test
 npm run e2e

@@ -18,7 +18,7 @@ It is designed as a reference-quality codebase for vertical-slice backend featur
 |- backend/          # .NET API, application layers, infrastructure, tests
 |- frontend/         # Angular workspace (app + libraries + e2e tests)
 |- docs/             # specs, runbooks, plans, evaluations
-|- PullUp.sln        # backend solution entrypoint
+|- backend/PullUp.sln # backend solution entrypoint
 |- global.json       # .NET SDK pin
 ```
 
@@ -42,8 +42,8 @@ It is designed as a reference-quality codebase for vertical-slice backend featur
 ### 1) Backend
 
 ```powershell
-dotnet restore PullUp.sln
-dotnet build PullUp.sln -c Release
+dotnet restore backend\PullUp.sln
+dotnet build backend\PullUp.sln -c Release
 dotnet tool install --global dotnet-ef --version 10.0.*
 dotnet ef database update --project backend/src/PullUp.Infrastructure --startup-project backend/src/PullUp.Api
 dotnet run --project backend/src/PullUp.Api
@@ -71,7 +71,7 @@ App defaults:
 ### Backend integration tests
 
 ```powershell
-dotnet test PullUp.sln -c Release
+dotnet test backend\PullUp.sln -c Release
 ```
 
 ### Frontend tests
