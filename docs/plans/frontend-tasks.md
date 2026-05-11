@@ -38,7 +38,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** `profile.service.spec.ts` — one TestBed case per method asserting URL + verb + body shape.
 - **Guidance:** Frontend, Library Structure (api).
 
-### FT-003: EventsService — *enables* L2-018..L2-036, L2-039
+### FT-003: EventsService — *enables* L2-018..L2-036, L2-039 — **done**
 - **Slice contents:** new `projects/api/src/lib/events/` folder with `events.service.{ts,contract.ts}`; DTOs `EventSummary`, `ListMyEventsResponse`, `EventDetail`, `HostSummary`, `GuestSummary`, `CreateEventRequest/Response`, `UpdateEventRequest`, `AddInviteeRequest`, `SetRsvpRequest`, `RsvpStatus` (string union); `IEventsService` exposes `list`, `get`, `create`, `update`, `cancel`, `addInvitee`, `removeInvitee`, `setRsvp`.
 - **Acceptance test:** `events.service.spec.ts` — one TestBed case per method.
 - **Guidance:** Frontend, Library Structure (api).

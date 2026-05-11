@@ -22,3 +22,17 @@ export type { ConfirmEmailChangeRequest } from './lib/profile/confirm-email-chan
 export type { DeleteAccountRequest } from './lib/profile/delete-account-request';
 export type { NotificationPreferences } from './lib/profile/notification-preferences';
 export type { UpdateNotificationPreferencesRequest } from './lib/profile/update-notification-preferences-request';
+export { EVENTS_SERVICE } from './lib/events/events.service.contract';
+export type { IEventsService } from './lib/events/events.service.contract';
+export { EventsService } from './lib/events/events.service';
+export type { RsvpStatus } from './lib/events/rsvp-status';
+export type { EventSummary } from './lib/events/event-summary';
+export type { ListMyEventsResponse } from './lib/events/list-my-events-response';
+export type { HostSummary } from './lib/events/host-summary';
+export type { GuestSummary } from './lib/events/guest-summary';
+export type { EventDetail } from './lib/events/event-detail';
+export type { CreateEventRequest } from './lib/events/create-event-request';
+export type { CreateEventResponse } from './lib/events/create-event-response';
+export type { UpdateEventRequest } from './lib/events/update-event-request';
+export type { AddInviteeRequest } from './lib/events/add-invitee-request';
+export type { SetRsvpRequest } from './lib/events/set-rsvp-request';
