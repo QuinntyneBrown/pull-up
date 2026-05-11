@@ -33,7 +33,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** unit test in `frontend/projects/api/src/lib/auth/auth.service.spec.ts` (TestBed + `HttpTestingController`): each new method posts to the expected path with the expected body and parses the response shape.
 - **Guidance:** Frontend, Library Structure (api).
 
-### FT-002: ProfileService — *enables* L2-012, L2-013, L2-014, L2-015, L2-016, L2-017
+### FT-002: ProfileService — *enables* L2-012, L2-013, L2-014, L2-015, L2-016, L2-017 — **done**
 - **Slice contents:** new `projects/api/src/lib/profile/` folder with `profile.service.{ts,contract.ts}`; DTOs `UpdateProfileRequest`, `RequestEmailChangeRequest`, `ConfirmEmailChangeRequest`, `DeleteAccountRequest`, `NotificationPreferences`, `UpdateNotificationPreferencesRequest`; `IProfileService` exposes `updateProfile`, `requestEmailChange`, `confirmEmailChange`, `deleteAccount`, `getNotificationPreferences`, `updateNotificationPreferences`.
 - **Acceptance test:** `profile.service.spec.ts` — one TestBed case per method asserting URL + verb + body shape.
 - **Guidance:** Frontend, Library Structure (api).

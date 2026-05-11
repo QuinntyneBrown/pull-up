@@ -13,3 +13,12 @@ export type { CompletePasswordResetRequest } from './lib/auth/complete-password-
 export type { RefreshAccessTokenRequest } from './lib/auth/refresh-access-token-request';
 export type { RefreshAccessTokenResponse } from './lib/auth/refresh-access-token-response';
 export type { SignOutRequest } from './lib/auth/sign-out-request';
+export { PROFILE_SERVICE } from './lib/profile/profile.service.contract';
+export type { IProfileService } from './lib/profile/profile.service.contract';
+export { ProfileService } from './lib/profile/profile.service';
+export type { UpdateProfileRequest } from './lib/profile/update-profile-request';
+export type { RequestEmailChangeRequest } from './lib/profile/request-email-change-request';
+export type { ConfirmEmailChangeRequest } from './lib/profile/confirm-email-change-request';
+export type { DeleteAccountRequest } from './lib/profile/delete-account-request';
+export type { NotificationPreferences } from './lib/profile/notification-preferences';
+export type { UpdateNotificationPreferencesRequest } from './lib/profile/update-notification-preferences-request';
