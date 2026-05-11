@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--pu-space-2, 8px);
+  padding: var(--pu-space-6, 24px) var(--pu-space-4, 16px);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.error-state__icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--mat-sys-error);
+  margin-bottom: var(--pu-space-2, 8px);
+}
+
+.error-state__title {
+  margin: 0;
+  font: var(--mat-sys-title-medium);
+  color: var(--mat-sys-on-surface);
+}
+
+.error-state__supporting {
+  margin: 0;
+  font: var(--mat-sys-body-medium);
+  max-width: 360px;
+}

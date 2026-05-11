@@ -62,7 +62,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** indirectly verified by FT-015 (home flow uses event cards) and FT-017 (event detail uses avatar stack).
 - **Guidance:** Frontend, Library Structure (components imports nothing from api/domain — verified by import grep in FT2 + FI1 evals). The "primitive inputs only" rule mirrors how `EventFormComponent` is placed in `domain` because **it** binds to api DTOs — same logic in reverse here keeps `components` clean.
 
-### FT-007: State components — *enables* L2-062, L2-063
+### FT-007: State components — *enables* L2-062, L2-063 — **done**
 - **Slice contents:** `empty-state/empty-state.component.{ts,html,scss}` (icon + title + supporting text + CTA slot), `error-state/error-state.component.{ts,html,scss}` (same shape, error theme + retry CTA), `loading-skeleton/loading-skeleton.component.{ts,html,scss}` (Material 3 skeleton).
 - **Acceptance test:** indirectly verified by FT-015 (home empty + error + loading paths).
 - **Guidance:** Frontend, Library Structure.
