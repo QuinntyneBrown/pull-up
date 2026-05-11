@@ -1,0 +1,36 @@
+<div class="home-page">
+  <header class="home-page__app-bar">
+    <pu-brand-logo size="sm"></pu-brand-logo>
+    <span class="home-page__spacer"></span>
+    @if (user(); as u) {
+      <span class="home-page__avatar" [attr.title]="u.fullName" data-testid="home-avatar">
+        {{ u.displayName.charAt(0) }}
+      </span>
+    }
+  </header>
+
+  <main class="home-page__content">
+    @if (loading()) {
+      <p class="home-page__loading" data-testid="home-loading">Loading your events…</p>
+    } @else if (errored()) {
+      <section class="home-page__error" data-testid="home-error">
+        <h2>We couldn't load your account</h2>
+        <p>Your session may have expired. Please sign in again.</p>
+        <button mat-flat-button color="primary" (click)="signOut()">Back to sign-up</button>
+      </section>
+    } @else if (user(); as u) {
+      <section class="home-page__welcome" data-testid="home-welcome">
+        <h1>Welcome, {{ u.displayName }}!</h1>
+        <p>You're signed in as {{ u.email }} ({{ u.role }}).</p>
+        <p>This is the MVP landing page — your upcoming events will appear here.</p>
+        <div class="home-page__actions">
+          <button mat-flat-button color="primary">
+            <mat-icon>add</mat-icon>
+            Create your first event
+          </button>
+          <button mat-stroked-button (click)="signOut()" data-testid="home-sign-out">Sign out</button>
+        </div>
+      </section>
+    }
+  </main>
+</div>

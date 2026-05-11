@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$violet-palette,
+      tertiary: mat.$rose-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
+  font-family: Roboto, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}

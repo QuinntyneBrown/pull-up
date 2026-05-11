@@ -1,0 +1,65 @@
+.sign-up-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--mat-sys-surface-container);
+
+  &__card {
+    background: var(--mat-sys-surface);
+    border-radius: 28px;
+    padding: 24px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: var(--mat-sys-level1);
+  }
+
+  &__brand {
+    margin-bottom: 24px;
+  }
+
+  &__heading {
+    font: var(--mat-sys-headline-medium);
+    margin: 0 0 8px;
+    color: var(--mat-sys-on-surface);
+  }
+
+  &__sub {
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0 0 24px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__submit {
+    margin-top: 16px;
+    height: 48px;
+    width: 100%;
+  }
+
+  &__server-error {
+    margin: 8px 0 0;
+    color: var(--mat-sys-error);
+    font: var(--mat-sys-body-medium);
+  }
+}
+
+@media (min-width: 768px) {
+  .sign-up-page {
+    padding: 32px;
+
+    &__card {
+      padding: 48px;
+    }
+  }
+}
