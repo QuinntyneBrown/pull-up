@@ -686,7 +686,7 @@ a:hover { text-decoration: underline; }
   justify-content: center;
   gap: var(--space-1);
   height: 40px;
-  padding: 0 var(--space-3);
+  padding: 0 var(--space-4);
   background: transparent;
   border: none;
   color: var(--md-on-surface);
@@ -694,6 +694,7 @@ a:hover { text-decoration: underline; }
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  white-space: nowrap;
 }
 .segmented__item + .segmented__item { border-left: 1px solid var(--md-outline); }
 .segmented__item--selected {
