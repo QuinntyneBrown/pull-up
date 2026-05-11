@@ -45,7 +45,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `RedactionTests` — POST a payload with a `password` field, capture the request log line, assert the value is `***REDACTED***`.
 - **Guidance:** General, no temp code.
 
-### BT-004: HTTPS / HSTS pipeline + Health endpoints
+### BT-004: HTTPS / HSTS pipeline + Health endpoints — **DONE** (see `docs/evaluations/BI1-BT-004.md`)
 - **Implements:** L2-049, L2-064.
 - **Slice:** add `app.UseHsts()` (non-dev only) to `Program.cs`; flesh out `HealthController` with `GET /health/live` (already inline) and `GET /health/ready` that pings `AppDbContext.Database.CanConnectAsync()` and returns 503 if false.
 - **Acceptance test:** `HealthTests` — `/health/live` always 200; `/health/ready` is 200 against the SQLite test DB; if the DbContext is disposed, 503.
