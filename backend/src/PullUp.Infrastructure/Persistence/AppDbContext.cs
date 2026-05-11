@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PullUp.Application.Abstractions;
+using PullUp.Domain.Audit;
 using PullUp.Domain.Users;
 
 namespace PullUp.Infrastructure.Persistence;
@@ -11,6 +12,7 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<AuditLogEntry> AuditLog => Set<AuditLogEntry>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

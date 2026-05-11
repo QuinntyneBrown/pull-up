@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PullUp.Application.Abstractions;
+using PullUp.Application.Common.Auditing;
+using PullUp.Infrastructure.Auditing;
 using PullUp.Infrastructure.Persistence;
 using PullUp.Infrastructure.Security;
 using System.Text;
@@ -38,6 +40,7 @@ public static class DependencyInjection
         services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
 
         services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
+        services.AddSingleton<IAuditLogger, AuditLogger>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
         services.AddSingleton<IJwtTokenService, JwtTokenService>();

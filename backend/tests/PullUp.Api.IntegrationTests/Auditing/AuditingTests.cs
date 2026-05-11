@@ -45,10 +45,11 @@ public sealed class AuditingTests : IClassFixture<TestWebApplicationFactory>
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        var row = await db.AuditLog
+        // SQLite cannot order by DateTimeOffset in the DB, so list and order client-side.
+        var rows = await db.AuditLog
             .Where(a => a.Event == "USER_REGISTERED" && a.Outcome == "SUCCESS")
-            .OrderByDescending(a => a.OccurredAt)
-            .FirstOrDefaultAsync();
+            .ToListAsync();
+        var row = rows.OrderByDescending(a => a.OccurredAt).FirstOrDefault();
 
         Assert.NotNull(row);
         Assert.True(row!.OccurredAt > DateTimeOffset.UtcNow.AddMinutes(-1));
@@ -81,11 +82,10 @@ public sealed class AuditingTests : IClassFixture<TestWebApplicationFactory>
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        var row = await db.AuditLog
+        var hasFailureRow = await db.AuditLog
             .Where(a => a.Event == "USER_REGISTERED" && a.Outcome == "FAILURE")
-            .OrderByDescending(a => a.OccurredAt)
-            .FirstOrDefaultAsync();
+            .AnyAsync();
 
-        Assert.NotNull(row);
+        Assert.True(hasFailureRow);
     }
 }

@@ -16,8 +16,11 @@ public static class DependencyInjection
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
         services.AddValidatorsFromAssembly(assembly);
 
-        // Pipeline behaviors run in registration order. Validation first (cheap, deterministic),
-        // then authorization (may hit the DB), then the handler itself.
+        // Pipeline behaviors run in registration order. Auditing wraps the entire pipeline
+        // so FAILURE rows capture validation + authorization rejections too. Validation runs
+        // first within the pipeline (cheap, deterministic), then authorization (may hit the DB),
+        // then the handler.
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuditingBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
 
