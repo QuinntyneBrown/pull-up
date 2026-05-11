@@ -90,7 +90,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 
 ## D. Account pages (vertical slices)
 
-### FT-011: Profile page (view + edit name) — **L2-011, L2-012**
+### FT-011: Profile page (view + edit name) — **L2-011, L2-012** — **done**
 - **Slice contents:** new `profile-page` domain component composing `AppBarComponent`, the M3 `mat-form-field` triple (full name / display name / email read-only), an "Edit" button that opens a `MatDialog` with the reactive form, an "Edit profile" button that posts to `PROFILE_SERVICE.updateProfile`. Route `/profile`. Includes the `BottomNavBarComponent` / `NavRailComponent` responsive nav.
 - **Acceptance test:** `profile-edit-flow.spec.ts` + `ProfilePagePom` — load /profile, click edit, change full name, save, reload — new name shown on the page.
 - **Guidance:** Frontend, Authentication (must be authed to view), Library Structure.

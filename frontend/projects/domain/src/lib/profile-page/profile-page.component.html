@@ -1,0 +1,44 @@
+<div class="profile-page" data-pu="profile-page">
+  <pu-app-bar title="Profile"></pu-app-bar>
+
+  <div class="profile-page__shell">
+    <pu-nav-rail [items]="navItems" [activeRoute]="activeRoute"></pu-nav-rail>
+
+    <main class="profile-page__main">
+      @if (loading()) {
+        <p class="profile-page__loading" data-testid="profile-loading">Loading…</p>
+      } @else if (errored()) {
+        <p class="profile-page__error" data-testid="profile-error">Could not load your profile. Try refreshing.</p>
+      } @else if (user(); as u) {
+        <section class="profile-page__section">
+          <h2 class="profile-page__heading">Your details</h2>
+
+          <mat-form-field appearance="fill" class="profile-page__field">
+            <mat-label>Full name</mat-label>
+            <input matInput [value]="u.fullName" readonly data-testid="profile-fullname" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="profile-page__field">
+            <mat-label>Display name</mat-label>
+            <input matInput [value]="u.displayName" readonly data-testid="profile-displayname" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="profile-page__field">
+            <mat-label>Email</mat-label>
+            <input matInput [value]="u.email" readonly data-testid="profile-email" />
+            <mat-hint>Email changes are confirmed via a link sent to the new address.</mat-hint>
+          </mat-form-field>
+
+          <button mat-flat-button color="primary" type="button"
+                  class="profile-page__edit-button"
+                  data-testid="profile-edit-button"
+                  (click)="openEdit()">
+            Edit profile
+          </button>
+        </section>
+      }
+    </main>
+  </div>
+
+  <pu-bottom-nav-bar [items]="navItems" [activeRoute]="activeRoute"></pu-bottom-nav-bar>
+</div>

@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Edit profile</h2>
+<mat-dialog-content>
+  <form class="edit-profile-form" [formGroup]="form" novalidate>
+    <mat-form-field appearance="fill" class="edit-profile-form__field">
+      <mat-label>Full name</mat-label>
+      <input matInput formControlName="fullName" autocomplete="name" data-testid="edit-fullname" />
+      @if (fullName.touched && fullName.errors?.['required']) {
+        <mat-error>Full name is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="edit-profile-form__field">
+      <mat-label>Display name</mat-label>
+      <input matInput formControlName="displayName" autocomplete="nickname" data-testid="edit-displayname" />
+      @if (displayName.touched && displayName.errors?.['required']) {
+        <mat-error>Display name is required.</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()" data-testid="edit-cancel">Cancel</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()" data-testid="edit-save">Save</button>
+</mat-dialog-actions>

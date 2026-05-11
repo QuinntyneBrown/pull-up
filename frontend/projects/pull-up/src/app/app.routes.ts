@@ -24,5 +24,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('domain').then(m => m.HomePageComponent),
   },
+  {
+    path: 'profile',
+    canActivate: [authGuard],
+    loadComponent: () => import('domain').then(m => m.ProfilePageComponent),
+  },
   { path: '**', redirectTo: 'sign-up' },
 ];
