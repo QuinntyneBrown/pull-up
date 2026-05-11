@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create event — Pull Up</title>
+    <link rel="stylesheet" href="material3.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="nav-rail" aria-label="Primary">
+        <a class="nav-rail__item nav-rail__item--active" href="home.html">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">event</span></span>
+          Events
+        </a>
+        <a class="nav-rail__item" href="#">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">group</span></span>
+          People
+        </a>
+        <a class="nav-rail__item" href="profile.html">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">person</span></span>
+          Profile
+        </a>
+      </nav>
+
+      <div>
+        <header class="app-bar">
+          <a class="app-bar__icon-button" href="home.html" aria-label="Cancel">
+            <span class="material-symbols-outlined">close</span>
+          </a>
+          <h1 class="app-bar__title">New event</h1>
+          <button class="btn btn--text" type="button">Save draft</button>
+        </header>
+
+        <main class="container page">
+          <form class="stack" style="margin-top:var(--space-3);">
+            <label class="text-field">
+              <span class="text-field__label">Event title</span>
+              <input class="text-field__input" type="text" value="Sunday brunch with cousins" />
+            </label>
+
+            <div class="row" style="gap:var(--space-3);align-items:stretch;">
+              <label class="text-field" style="flex:1;margin-bottom:0;">
+                <span class="text-field__label">Date</span>
+                <input class="text-field__input" type="text" value="Sun, Aug 23, 2026" />
+              </label>
+              <label class="text-field" style="flex:1;margin-bottom:0;">
+                <span class="text-field__label">Time</span>
+                <input class="text-field__input" type="text" value="11:00 AM" />
+              </label>
+            </div>
+
+            <label class="text-field" style="margin-top:var(--space-4);">
+              <span class="text-field__label">Location</span>
+              <input class="text-field__input" type="text" value="Esther's Diner — 88 5th St" />
+            </label>
+
+            <label class="text-field">
+              <span class="text-field__label">What's the plan?</span>
+              <textarea class="text-field__input text-field__input--textarea" rows="4">Pancakes, mimosas, and cousin gossip. Kids welcome — Esther's has crayons.</textarea>
+            </label>
+
+            <section class="card card--outlined">
+              <h2 class="card__title" style="font-size:16px;line-height:24px;margin:0 0 var(--space-3);">Invite people</h2>
+              <div class="row" style="gap:var(--space-2);">
+                <span class="chip chip--input">
+                  <span class="avatar avatar--sm avatar--secondary">LM</span>
+                  Luis Marquez
+                  <span class="chip__close material-symbols-outlined" style="font-size:16px;">close</span>
+                </span>
+                <span class="chip chip--input">
+                  <span class="avatar avatar--sm avatar--tertiary">JG</span>
+                  Joaquin Garcia
+                  <span class="chip__close material-symbols-outlined" style="font-size:16px;">close</span>
+                </span>
+                <span class="chip chip--input">
+                  <span class="avatar avatar--sm">ET</span>
+                  Esther Torres
+                  <span class="chip__close material-symbols-outlined" style="font-size:16px;">close</span>
+                </span>
+                <button class="chip chip--assist" type="button">
+                  <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+                  Add more
+                </button>
+              </div>
+              <p class="md-body-small" style="margin-top:var(--space-3);">
+                3 family members invited. You can add friends by email after saving.
+              </p>
+            </section>
+
+            <section class="card card--outlined">
+              <h2 class="card__title" style="font-size:16px;line-height:24px;margin:0 0 var(--space-3);">Options</h2>
+              <div class="list-item list-item--divider" style="padding-left:0;padding-right:0;">
+                <span class="list-item__leading material-symbols-outlined">how_to_vote</span>
+                <div class="list-item__body">
+                  <p class="list-item__title">Allow guests to bring +1</p>
+                  <p class="list-item__supporting">Each invited guest can add one extra person.</p>
+                </div>
+                <span class="chip chip--filter chip--selected">On</span>
+              </div>
+              <div class="list-item" style="padding-left:0;padding-right:0;">
+                <span class="list-item__leading material-symbols-outlined">visibility</span>
+                <div class="list-item__body">
+                  <p class="list-item__title">Show guest list to invitees</p>
+                  <p class="list-item__supporting">Hide if you want to keep RSVPs private.</p>
+                </div>
+                <span class="chip chip--filter chip--selected">On</span>
+              </div>
+            </section>
+
+            <div class="card__actions" style="margin-top:var(--space-5);">
+              <a class="btn btn--text" href="home.html">Cancel</a>
+              <button class="btn btn--filled" type="button">
+                <span class="material-symbols-outlined">send</span>
+                Send invites
+              </button>
+            </div>
+          </form>
+        </main>
+      </div>
+    </div>
+
+    <nav class="nav-bar" aria-label="Primary mobile">
+      <a class="nav-bar__item nav-bar__item--active" href="home.html">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">event</span></span>
+        Events
+      </a>
+      <a class="nav-bar__item" href="#">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">group</span></span>
+        People
+      </a>
+      <a class="nav-bar__item" href="profile.html">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">person</span></span>
+        Profile
+      </a>
+    </nav>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>No events yet — Pull Up</title>
+    <link rel="stylesheet" href="material3.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="nav-rail" aria-label="Primary">
+        <a class="nav-rail__item nav-rail__item--active" href="home.html">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">event</span></span>
+          Events
+        </a>
+        <a class="nav-rail__item" href="#">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">group</span></span>
+          People
+        </a>
+        <a class="nav-rail__item" href="profile.html">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">person</span></span>
+          Profile
+        </a>
+      </nav>
+
+      <div>
+        <header class="app-bar">
+          <button class="app-bar__icon-button" aria-label="Menu" type="button">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h1 class="app-bar__title">Pull Up</h1>
+          <div class="avatar avatar--sm app-bar__avatar" title="Rosa Marquez">RM</div>
+        </header>
+
+        <main class="container page" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 64px - 80px);">
+          <section class="placeholder">
+            <span class="placeholder__icon">
+              <span class="material-symbols-outlined">celebration</span>
+            </span>
+            <h2 class="placeholder__title">No events yet</h2>
+            <p class="placeholder__supporting">
+              When you create an event or get invited to one, you'll see it here. Pull family together — it only takes a minute.
+            </p>
+            <div class="row" style="justify-content:center;gap:var(--space-3);">
+              <a class="btn btn--filled" href="event-create.html">
+                <span class="material-symbols-outlined">add</span>
+                Create your first event
+              </a>
+              <a class="btn btn--text" href="#">Learn how it works</a>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <nav class="nav-bar" aria-label="Primary mobile">
+      <a class="nav-bar__item nav-bar__item--active" href="home.html">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">event</span></span>
+        Events
+      </a>
+      <a class="nav-bar__item" href="#">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">group</span></span>
+        People
+      </a>
+      <a class="nav-bar__item" href="profile.html">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">person</span></span>
+        Profile
+      </a>
+    </nav>
+  </body>
+</html>

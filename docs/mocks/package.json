@@ -1,0 +1,13 @@
+{
+  "name": "pull-up-mocks-renderer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Tooling to render ./docs/mocks/*.html into PNG screenshots at 360/768/1440 widths for the Discovery phase (D1/D2) of the Pull Up workflow. This is documentation tooling, not application code.",
+  "scripts": {
+    "render": "node ./render.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.47.0"
+  }
+}

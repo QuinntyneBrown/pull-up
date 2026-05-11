@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Marquez family dinner — Pull Up</title>
+    <link rel="stylesheet" href="material3.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="nav-rail" aria-label="Primary">
+        <a class="nav-rail__item nav-rail__item--active" href="home.html">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">event</span></span>
+          Events
+        </a>
+        <a class="nav-rail__item" href="#">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">group</span></span>
+          People
+        </a>
+        <a class="nav-rail__item" href="profile.html">
+          <span class="nav-rail__icon"><span class="material-symbols-outlined">person</span></span>
+          Profile
+        </a>
+      </nav>
+
+      <div>
+        <header class="app-bar">
+          <a class="app-bar__icon-button" href="home.html" aria-label="Back">
+            <span class="material-symbols-outlined">arrow_back</span>
+          </a>
+          <h1 class="app-bar__title">Event</h1>
+          <button class="app-bar__icon-button" type="button" aria-label="Share">
+            <span class="material-symbols-outlined">share</span>
+          </button>
+          <button class="app-bar__icon-button" type="button" aria-label="More">
+            <span class="material-symbols-outlined">more_vert</span>
+          </button>
+        </header>
+
+        <main class="container page">
+          <section class="section card card--hero">
+            <p class="md-label-medium" style="text-transform:uppercase;letter-spacing:1px;margin:0 0 var(--space-2);">Saturday, August 15</p>
+            <h2 class="md-headline-medium" style="margin:0 0 var(--space-3);">Marquez family dinner</h2>
+            <div class="card__meta" style="color:inherit;">
+              <span class="card__meta-item">
+                <span class="material-symbols-outlined">schedule</span>
+                6:30 PM – 10:00 PM
+              </span>
+              <span class="card__meta-item">
+                <span class="material-symbols-outlined">place</span>
+                Abuela's house — 42 Maple Ave
+              </span>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section__header">
+              <h2 class="section__title">Your RSVP</h2>
+            </div>
+            <div class="segmented" role="group" aria-label="RSVP">
+              <button class="segmented__item segmented__item--selected" type="button">
+                <span class="material-symbols-outlined">check</span>
+                Going
+              </button>
+              <button class="segmented__item" type="button">
+                <span class="material-symbols-outlined">help</span>
+                Maybe
+              </button>
+              <button class="segmented__item" type="button">
+                <span class="material-symbols-outlined">close</span>
+                Can't go
+              </button>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section__header">
+              <h2 class="section__title">About this event</h2>
+            </div>
+            <div class="card card--outlined">
+              <p class="md-body-large" style="margin:0;">
+                Abuela is making her pollo guisado and asked for everyone — kids welcome.
+                Bring a side or a dessert if you can, and drinks for yourselves.
+                Park on the street, the driveway will be full.
+              </p>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section__header">
+              <h2 class="section__title">Hosted by</h2>
+            </div>
+            <div class="list-item card card--outlined" style="padding:var(--space-3) var(--space-4);">
+              <span class="avatar avatar--secondary">EM</span>
+              <div class="list-item__body">
+                <p class="list-item__title">Elena Marquez</p>
+                <p class="list-item__supporting">Abuela · sent the invite Aug 1</p>
+              </div>
+              <button class="app-bar__icon-button" type="button" aria-label="Message host">
+                <span class="material-symbols-outlined">chat_bubble</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section__header">
+              <h2 class="section__title">Guests · 14 invited</h2>
+              <a class="btn btn--text" href="#">See all</a>
+            </div>
+            <div class="card card--filled" style="padding:var(--space-3);">
+              <div class="row" style="gap:var(--space-2);">
+                <span class="chip chip--filter chip--selected">12 going</span>
+                <span class="chip chip--filter">2 maybe</span>
+                <span class="chip chip--filter">0 can't go</span>
+              </div>
+              <div class="stack" style="margin-top:var(--space-3);">
+                <div class="list-item">
+                  <span class="avatar">RM</span>
+                  <div class="list-item__body">
+                    <p class="list-item__title">Rosa Marquez <span class="md-body-small">(you)</span></p>
+                    <p class="list-item__supporting">Going · bringing flan</p>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <span class="avatar avatar--secondary">LM</span>
+                  <div class="list-item__body">
+                    <p class="list-item__title">Luis Marquez</p>
+                    <p class="list-item__supporting">Going</p>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <span class="avatar avatar--tertiary">JG</span>
+                  <div class="list-item__body">
+                    <p class="list-item__title">Joaquin Garcia</p>
+                    <p class="list-item__supporting">Going · bringing wine</p>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <span class="avatar">ET</span>
+                  <div class="list-item__body">
+                    <p class="list-item__title">Esther Torres</p>
+                    <p class="list-item__supporting">Maybe</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="card__actions" style="margin:0;">
+              <button class="btn btn--outlined btn--danger" type="button">
+                <span class="material-symbols-outlined">delete</span>
+                Decline
+              </button>
+              <button class="btn btn--tonal" type="button">
+                <span class="material-symbols-outlined">calendar_add_on</span>
+                Add to calendar
+              </button>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <nav class="nav-bar" aria-label="Primary mobile">
+      <a class="nav-bar__item nav-bar__item--active" href="home.html">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">event</span></span>
+        Events
+      </a>
+      <a class="nav-bar__item" href="#">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">group</span></span>
+        People
+      </a>
+      <a class="nav-bar__item" href="profile.html">
+        <span class="nav-bar__icon"><span class="material-symbols-outlined">person</span></span>
+        Profile
+      </a>
+    </nav>
+  </body>
+</html>

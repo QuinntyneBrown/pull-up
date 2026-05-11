@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pull Up — Mock Gallery</title>
+    <link rel="stylesheet" href="material3.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="app-bar">
+      <div class="auth-card__logo" style="width:40px;height:40px;border-radius:var(--shape-sm);font-size:18px;margin-left:8px;">P</div>
+      <h1 class="app-bar__title" style="margin-left:8px">Pull Up — Mock Gallery</h1>
+    </header>
+
+    <main class="container">
+      <section class="section">
+        <p class="md-body-large" style="margin:0 0 var(--space-4);color:var(--md-on-surface-variant);max-width:680px;">
+          A radically simple event-management app for family and friends. Below are every screen mocked
+          for the workflow's Discovery phase. Each tile links to its mock; the
+          <code>screenshots/</code> folder holds rendered PNGs at 360 / 768 / 1440 widths.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section__header">
+          <h2 class="section__title">Unauthenticated</h2>
+        </div>
+        <div class="gallery">
+          <a class="gallery__item" href="sign-in.html">
+            <span class="gallery__group">Auth</span>
+            <h3 class="gallery__title">Sign in</h3>
+            <p class="gallery__desc">Email + password sign-in for returning users.</p>
+          </a>
+          <a class="gallery__item" href="sign-up.html">
+            <span class="gallery__group">Auth</span>
+            <h3 class="gallery__title">Sign up</h3>
+            <p class="gallery__desc">Create an account with name, email and password.</p>
+          </a>
+          <a class="gallery__item" href="password-reset.html">
+            <span class="gallery__group">Auth</span>
+            <h3 class="gallery__title">Reset password</h3>
+            <p class="gallery__desc">Request a password reset link via email.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__header">
+          <h2 class="section__title">Authenticated app</h2>
+        </div>
+        <div class="gallery">
+          <a class="gallery__item" href="home.html">
+            <span class="gallery__group">Landing</span>
+            <h3 class="gallery__title">Home — Upcoming events</h3>
+            <p class="gallery__desc">Your upcoming and invited events, with filter chips and a "create" FAB.</p>
+          </a>
+          <a class="gallery__item" href="event-detail.html">
+            <span class="gallery__group">Event</span>
+            <h3 class="gallery__title">Event detail</h3>
+            <p class="gallery__desc">Date, location, RSVP buttons, attendee list, host actions.</p>
+          </a>
+          <a class="gallery__item" href="event-create.html">
+            <span class="gallery__group">Event</span>
+            <h3 class="gallery__title">Create / edit event</h3>
+            <p class="gallery__desc">Form: title, date, location, description, invitees.</p>
+          </a>
+          <a class="gallery__item" href="profile.html">
+            <span class="gallery__group">Account</span>
+            <h3 class="gallery__title">Profile &amp; settings</h3>
+            <p class="gallery__desc">Avatar, name, notification preferences, sign-out.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__header">
+          <h2 class="section__title">State examples</h2>
+        </div>
+        <div class="gallery">
+          <a class="gallery__item" href="empty-state.html">
+            <span class="gallery__group">State</span>
+            <h3 class="gallery__title">Empty state</h3>
+            <p class="gallery__desc">Home page for a brand-new user with no events yet.</p>
+          </a>
+          <a class="gallery__item" href="error-state.html">
+            <span class="gallery__group">State</span>
+            <h3 class="gallery__title">Error state</h3>
+            <p class="gallery__desc">Home page when the events list fails to load.</p>
+          </a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
