@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
 using PullUp.Application.Features.Users.ConfirmEmailChange;
+using PullUp.Application.Features.Users.DeleteAccount;
 using PullUp.Application.Features.Users.GetCurrentUser;
 using PullUp.Application.Features.Users.GetNotificationPreferences;
 using PullUp.Application.Features.Users.RegisterUser;
@@ -111,6 +112,19 @@ public sealed class UsersController : ControllerBase
         await _mediator.Send(
             new UpdateNotificationPreferencesCommand(request.NewInvitations, request.EventReminders, request.RsvpChanges),
             cancellationToken);
+        return NoContent();
+    }
+
+    [HttpDelete("me")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> DeleteAccount(
+        [FromBody] DeleteAccountRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteAccountCommand(request.CurrentPassword), cancellationToken);
         return NoContent();
     }
 }

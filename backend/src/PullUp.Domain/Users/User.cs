@@ -15,6 +15,8 @@ public sealed class User
     public string? PendingEmailTokenHash { get; private set; }
     public DateTimeOffset? PendingEmailExpiresAt { get; private set; }
 
+    public DateTimeOffset? DeletedAt { get; private set; }
+
     private User() { }
 
     public static User Register(string email, string fullName, string passwordHash)
@@ -80,5 +82,21 @@ public sealed class User
         PendingEmailTokenHash = null;
         PendingEmailExpiresAt = null;
         return true;
+    }
+
+    public const string TombstoneMarker = "[deleted user]";
+
+    public void Tombstone(DateTimeOffset now)
+    {
+        if (DeletedAt is not null) return;
+        FullName = TombstoneMarker;
+        DisplayName = TombstoneMarker;
+        // Keep the unique-email constraint satisfied while making the value useless.
+        Email = $"deleted-{Id:N}@pullup.invalid";
+        PasswordHash = string.Empty;
+        PendingEmail = null;
+        PendingEmailTokenHash = null;
+        PendingEmailExpiresAt = null;
+        DeletedAt = now;
     }
 }

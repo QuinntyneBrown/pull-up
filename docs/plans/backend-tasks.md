@@ -117,7 +117,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Slice:** new entity `Notifications/NotificationPreference` + config + migration `AddNotificationPreferences`. `RegisterUserCommandHandler` extended to create a default-on `NotificationPreference` in the same transaction. New `UpdateNotificationPreferencesCommand` + handler that upserts.
 - **Acceptance test:** `NotificationPreferencesTests` — fresh user has all three toggles on; toggling individually persists; querying returns the latest state.
 
-### BT-015: `DELETE /api/users/me` (account deletion)
+### BT-015: `DELETE /api/users/me` (account deletion) — **DONE** (see `docs/evaluations/BI1-BT-015.md`)
 - **Implements:** L2-014, L2-015.
 - **Slice:** `DeleteAccountCommand` requires re-typed password; `User.Tombstone()` replaces identifying fields with `[deleted user]` markers, sets `DeletedAt`; cancels every hosted future event via the same `CancelEvent` handler (reused per-event in a loop, no shortcut); removes user from invitee lists on future events. Audits `ACCOUNT_DELETED`.
 - **Acceptance test:** `DeleteAccountTests` — wrong password → 401; correct password → 204; subsequent `/me` with the JWT → 401 (refresh tokens revoked); past-event guest lists show `[deleted user]` while present events drop the user.
