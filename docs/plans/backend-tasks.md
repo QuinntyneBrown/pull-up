@@ -112,7 +112,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `EmailChangeTests` — request with wrong current password → 401; request with right password → 202 + verification email recorded; confirm with the token → email updated; confirm with a stale token → 400.
 - **Depends on:** BT-005 (for `ITokenHasher`).
 
-### BT-014: Default notification preferences + `PUT /api/users/me/notification-preferences`
+### BT-014: Default notification preferences + `PUT /api/users/me/notification-preferences` — **DONE** (see `docs/evaluations/BI1-BT-014.md`)
 - **Implements:** L2-016, L2-017.
 - **Slice:** new entity `Notifications/NotificationPreference` + config + migration `AddNotificationPreferences`. `RegisterUserCommandHandler` extended to create a default-on `NotificationPreference` in the same transaction. New `UpdateNotificationPreferencesCommand` + handler that upserts.
 - **Acceptance test:** `NotificationPreferencesTests` — fresh user has all three toggles on; toggling individually persists; querying returns the latest state.

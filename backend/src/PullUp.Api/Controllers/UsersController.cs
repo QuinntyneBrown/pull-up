@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
 using PullUp.Application.Features.Users.ConfirmEmailChange;
 using PullUp.Application.Features.Users.GetCurrentUser;
+using PullUp.Application.Features.Users.GetNotificationPreferences;
 using PullUp.Application.Features.Users.RegisterUser;
 using PullUp.Application.Features.Users.RequestEmailChange;
+using PullUp.Application.Features.Users.UpdateNotificationPreferences;
 using PullUp.Application.Features.Users.UpdateProfile;
 
 namespace PullUp.Api.Controllers;
@@ -84,6 +86,31 @@ public sealed class UsersController : ControllerBase
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new ConfirmEmailChangeCommand(request.Token), cancellationToken);
+        return NoContent();
+    }
+
+    [HttpGet("me/notification-preferences")]
+    [Authorize]
+    [ProducesResponseType(typeof(NotificationPreferencesResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> GetNotificationPreferences(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetNotificationPreferencesQuery(), cancellationToken);
+        return Ok(response);
+    }
+
+    [HttpPut("me/notification-preferences")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> UpdateNotificationPreferences(
+        [FromBody] UpdateNotificationPreferencesRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(
+            new UpdateNotificationPreferencesCommand(request.NewInvitations, request.EventReminders, request.RsvpChanges),
+            cancellationToken);
         return NoContent();
     }
 }

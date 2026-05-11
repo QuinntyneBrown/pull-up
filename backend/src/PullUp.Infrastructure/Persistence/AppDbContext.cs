@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PullUp.Application.Abstractions;
 using PullUp.Domain.Audit;
+using PullUp.Domain.Notifications;
 using PullUp.Domain.Users;
 
 namespace PullUp.Infrastructure.Persistence;
@@ -14,6 +15,7 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
+    public DbSet<NotificationPreference> NotificationPreferences => Set<NotificationPreference>();
     public DbSet<AuditLogEntry> AuditLog => Set<AuditLogEntry>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
