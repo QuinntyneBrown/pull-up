@@ -31,6 +31,10 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+else
+{
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 app.UseCors();
@@ -93,7 +97,6 @@ app.UseExceptionHandler(handler =>
     });
 });
 
-app.MapGet("/health/live", () => Results.Ok(new { status = "healthy" }));
 app.MapControllers();
 
 app.Run();
