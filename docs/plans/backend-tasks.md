@@ -61,7 +61,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `RefreshTokenStoreTests` — generates a refresh token, persists the hash, verifies the raw value hashes to the same row, and confirms a revoked token cannot be looked up.
 - **Guidance:** Backend (.NET), Authentication, one type per file.
 
-### BT-006: `POST /api/auth/sign-in` (email + password)
+### BT-006: `POST /api/auth/sign-in` (email + password) — **DONE** (see `docs/evaluations/BI1-BT-006.md`)
 - **Implements:** L2-004, L2-005, L2-043.
 - **Slice:** new `AuthController.SignIn`, `SignInUserCommand`, `Handler`, `Validator` (email syntax + password not empty), `Response` (access + refresh + user profile). Handler verifies password via `IPasswordHasher.Verify`, generic 401 on failure, audits both success and failure via the `AuditingBehavior`.
 - **Acceptance test:** `SignInUserTests` — happy path returns 200 + tokens that work against `/api/users/me`; wrong password returns 401 with generic message; unknown email returns 401 with the same generic message (no enumeration).

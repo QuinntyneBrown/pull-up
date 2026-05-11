@@ -4,6 +4,7 @@ using PullUp.Api.Logging;
 using PullUp.Application;
 using PullUp.Application.Common.Exceptions;
 using PullUp.Application.Features.Users.RegisterUser;
+using PullUp.Application.Features.Users.SignInUser;
 using PullUp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,6 +75,15 @@ app.UseExceptionHandler(handler =>
                 break;
             case UnauthorizedAccessException:
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                break;
+            case InvalidCredentialsException invalid:
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                await context.Response.WriteAsJsonAsync(new ProblemDetails
+                {
+                    Status = StatusCodes.Status401Unauthorized,
+                    Title = "Invalid credentials",
+                    Detail = invalid.Message,
+                });
                 break;
             case NotAuthorizedException notAuth:
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
