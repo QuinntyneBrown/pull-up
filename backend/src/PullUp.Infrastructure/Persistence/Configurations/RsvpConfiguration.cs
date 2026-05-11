@@ -16,6 +16,7 @@ public sealed class RsvpConfiguration : IEntityTypeConfiguration<Rsvp>
         builder.Property(r => r.Status).HasConversion<int>().IsRequired();
         builder.Property(r => r.Note).HasMaxLength(500);
         builder.Property(r => r.UpdatedAt).IsRequired();
+        builder.Property(r => r.ReminderSentAt);
 
         builder.HasIndex(r => new { r.EventId, r.UserId }).IsUnique();
     }

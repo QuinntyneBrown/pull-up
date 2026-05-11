@@ -9,6 +9,7 @@ using PullUp.Application.Common.Auditing;
 using PullUp.Infrastructure.Auditing;
 using PullUp.Infrastructure.Notifications;
 using PullUp.Infrastructure.Persistence;
+using PullUp.Infrastructure.Reminders;
 using PullUp.Infrastructure.Security;
 using System.Text;
 
@@ -44,6 +45,8 @@ public static class DependencyInjection
         services.AddSingleton<IAuditLogger, AuditLogger>();
         services.AddSingleton<IEmailSender, LoggingEmailSender>();
         services.AddSingleton<INotificationSender, LoggingNotificationSender>();
+
+        services.AddHostedService<EventReminderHostedService>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
         services.AddSingleton<ITokenHasher, HmacTokenHasher>();

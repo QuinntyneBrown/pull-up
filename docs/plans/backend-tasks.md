@@ -166,7 +166,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `SetRsvpTests` — invitee can set; updates update aggregate counts; past event returns 409 + UI doesn't surface control (frontend concern out of backend test scope); host with `RsvpChanges=on` sees notification dispatched.
 - **Depends on:** BT-001, BT-014, BT-016.
 
-### BT-023: 24-hour event-reminder hosted service
+### BT-023: 24-hour event-reminder hosted service — **DONE** (see `docs/evaluations/BI1-BT-023.md`)
 - **Implements:** L2-038.
 - **Slice:** new `Infrastructure/Reminders/EventReminderHostedService : BackgroundService` polling once per minute. New `DispatchEventRemindersCommand` finding events starting in `[24h, 24h+1min]` with attending RSVPs whose owners have `EventReminders=on`; dispatches one reminder per matching `Rsvp` and persists an idempotency row to prevent duplicates after restart.
 - **Acceptance test:** `EventReminderTests` — seed an event 24 h ahead with `Going` RSVPs of mixed preferences; invoke the command; only `on` users receive; running twice does not duplicate.

@@ -8,6 +8,7 @@ public sealed class Rsvp
     public RsvpStatus Status { get; private set; }
     public string? Note { get; private set; }
     public DateTimeOffset UpdatedAt { get; private set; }
+    public DateTimeOffset? ReminderSentAt { get; private set; }
 
     private Rsvp() { }
 
@@ -29,5 +30,13 @@ public sealed class Rsvp
         Status = status;
         Note = note?.Trim();
         UpdatedAt = now;
+        // Status changes (e.g. CantGo -> Going) reset reminder eligibility so a
+        // user who flipped to attending after the original dispatch still gets one.
+        ReminderSentAt = null;
+    }
+
+    public void MarkReminderSent(DateTimeOffset now)
+    {
+        ReminderSentAt = now;
     }
 }
