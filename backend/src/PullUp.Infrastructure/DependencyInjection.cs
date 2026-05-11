@@ -18,8 +18,22 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("AppDb")
             ?? throw new InvalidOperationException("Missing connection string 'AppDb'.");
 
+        // SQL Server (SQLEXPRESS) is the canonical local + production provider per the
+        // implementation guidance. The Sqlite branch exists only for integration tests
+        // which set "Database:Provider" to "Sqlite" and point AppDb at an in-memory store.
+        var provider = configuration["Database:Provider"] ?? "SqlServer";
+
         services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        {
+            if (string.Equals(provider, "Sqlite", StringComparison.OrdinalIgnoreCase))
+            {
+                options.UseSqlite(connectionString);
+            }
+            else
+            {
+                options.UseSqlServer(connectionString);
+            }
+        });
 
         services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
 
