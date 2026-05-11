@@ -36,6 +36,21 @@
             Edit profile
           </button>
         </section>
+
+        <section class="profile-page__section" [formGroup]="prefsForm">
+          <h2 class="profile-page__heading">Notifications</h2>
+          <p class="profile-page__sub">Choose which emails you'd like to receive.</p>
+
+          <mat-slide-toggle formControlName="newInvitations" data-testid="prefs-new-invitations">
+            New invitations
+          </mat-slide-toggle>
+          <mat-slide-toggle formControlName="eventReminders" data-testid="prefs-event-reminders">
+            Event reminders
+          </mat-slide-toggle>
+          <mat-slide-toggle formControlName="rsvpChanges" data-testid="prefs-rsvp-changes">
+            RSVP changes
+          </mat-slide-toggle>
+        </section>
       }
     </main>
   </div>

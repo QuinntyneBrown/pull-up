@@ -95,7 +95,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** `profile-edit-flow.spec.ts` + `ProfilePagePom` — load /profile, click edit, change full name, save, reload — new name shown on the page.
 - **Guidance:** Frontend, Authentication (must be authed to view), Library Structure.
 
-### FT-012: Notification preferences toggles on Profile — **L2-016, L2-017**
+### FT-012: Notification preferences toggles on Profile — **L2-016, L2-017** — **done**
 - **Slice contents:** add a "Notifications" section to `ProfilePage` showing three M3 `mat-slide-toggle`s (New invitations / Event reminders / RSVP changes). Calls `PROFILE_SERVICE.getNotificationPreferences()` on mount; `updateNotificationPreferences` on toggle change (debounced ≤ 500 ms). Defaults all-on for new users.
 - **Acceptance test:** extend `profile-edit-flow.spec.ts` (or split into a `notification-preferences.spec.ts`) — new user lands with all on; toggling persists across reload.
 - **Guidance:** Frontend, Library Structure.
