@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+.filter-strip {
+  display: flex;
+  gap: var(--pu-space-2, 8px);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: var(--pu-space-2, 8px) 0;
+}
+
+.filter-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-strip__chip {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 0 var(--pu-space-3, 12px);
+  border-radius: 8px;
+  border: 1px solid var(--mat-sys-outline);
+  background: transparent;
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-label-large);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.filter-strip__chip:hover {
+  background: var(--mat-sys-surface-container-high);
+}
+
+.filter-strip__chip--selected {
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+  border-color: transparent;
+}

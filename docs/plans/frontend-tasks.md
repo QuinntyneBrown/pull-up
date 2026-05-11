@@ -67,7 +67,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 - **Acceptance test:** indirectly verified by FT-015 (home empty + error + loading paths).
 - **Guidance:** Frontend, Library Structure.
 
-### FT-008: Interactive components — *enables* L2-025, L2-034
+### FT-008: Interactive components — *enables* L2-025, L2-034 — **done**
 - **Slice contents:** `filter-strip/filter-strip.component.{ts,html,scss}` (horizontal scroll chips, inputs `chips` + `selectedKey`, output `chipChange`), `segmented-button/segmented-button.component.{ts,html,scss}` (M3 segmented control for RSVP picker).
 - **Acceptance test:** indirectly verified by FT-015 + FT-017.
 - **Guidance:** Frontend, Library Structure.

@@ -9,4 +9,8 @@ export type { AvatarEntry, AvatarTone } from './lib/rsvp-avatar-stack/rsvp-avata
 export { EmptyStateComponent } from './lib/empty-state/empty-state.component';
 export { ErrorStateComponent } from './lib/error-state/error-state.component';
 export { LoadingSkeletonComponent } from './lib/loading-skeleton/loading-skeleton.component';
+export { FilterStripComponent } from './lib/filter-strip/filter-strip.component';
+export type { FilterChip } from './lib/filter-strip/filter-strip.component';
+export { SegmentedButtonComponent } from './lib/segmented-button/segmented-button.component';
+export type { SegmentedOption } from './lib/segmented-button/segmented-button.component';
 export type { NavItem } from './lib/nav-item';

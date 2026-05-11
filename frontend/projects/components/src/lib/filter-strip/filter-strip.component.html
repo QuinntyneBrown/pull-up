@@ -1,0 +1,13 @@
+<div class="filter-strip" data-pu="filter-strip" role="tablist">
+  @for (chip of chips; track chip.key) {
+    <button type="button"
+            class="filter-strip__chip"
+            [class.filter-strip__chip--selected]="chip.key === selectedKey"
+            [attr.aria-selected]="chip.key === selectedKey"
+            role="tab"
+            (click)="onSelect(chip.key)"
+            [attr.data-testid]="'filter-chip-' + chip.key">
+      {{ chip.label }}
+    </button>
+  }
+</div>
