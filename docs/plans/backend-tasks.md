@@ -19,6 +19,12 @@ The MB2 integration-test harness (xUnit + WebApplicationFactory + SQLite shared-
 
 ---
 
+## A note on task shape — "vertical slice" vs "supporting infrastructure"
+
+Most tasks below are end-to-end HTTP-driven vertical slices (HTTP endpoint → command/handler → `IAppDbContext` → DB + audit + notify as needed). A handful — **BT-001, BT-002, BT-005, BT-019** — are flagged here as **supporting infrastructure**: they advance specific L2 requirements (authorization gating, audit log, refresh-token persistence, notification dispatcher) and each ships its own acceptance test, but they do not introduce a new HTTP endpoint on their own. Folding them into their first consuming slice was considered and rejected — the consuming slices would balloon past the "1–3 loop iterations" sizing rule (e.g., BT-006 would have to bring rate limiter + refresh-token store + auditing all at once).
+
+Treating them as separate prerequisite tasks is the explicit choice; each carries enough behavior and test coverage that it is **not** "scaffolding only with no end-to-end value" — it advances real L2 requirements and the acceptance test proves the behavior end-to-end against the running app.
+
 ## A. Cross-cutting (do these first — they enable later slices)
 
 ### BT-001: Authorization behavior + `[AuthorizationRequirement]` marker
