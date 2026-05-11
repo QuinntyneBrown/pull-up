@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using PullUp.Application.Abstractions;
 using PullUp.Application.Common.Auditing;
 using PullUp.Infrastructure.Auditing;
+using PullUp.Infrastructure.Notifications;
 using PullUp.Infrastructure.Persistence;
 using PullUp.Infrastructure.Security;
 using System.Text;
@@ -41,6 +42,7 @@ public static class DependencyInjection
 
         services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
         services.AddSingleton<IAuditLogger, AuditLogger>();
+        services.AddSingleton<IEmailSender, LoggingEmailSender>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
         services.AddSingleton<ITokenHasher, HmacTokenHasher>();

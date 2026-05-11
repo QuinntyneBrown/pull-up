@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
 using PullUp.Application.Features.Users.RefreshAccessToken;
+using PullUp.Application.Features.Users.RequestPasswordReset;
 using PullUp.Application.Features.Users.SignInUser;
 using PullUp.Application.Features.Users.SignOut;
 
@@ -54,5 +55,16 @@ public sealed class AuthController : ControllerBase
     {
         await _mediator.Send(new SignOutCommand(request.RefreshToken), cancellationToken);
         return NoContent();
+    }
+
+    [HttpPost("password-reset")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RequestPasswordReset(
+        [FromBody] RequestPasswordResetRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new RequestPasswordResetCommand(request.Email), cancellationToken);
+        return Accepted();
     }
 }

@@ -85,7 +85,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `SignOutTests` — sign in, sign out, the refresh token no longer mints new access tokens.
 - **Depends on:** BT-005, BT-006.
 
-### BT-010: `POST /api/auth/password-reset` (request link)
+### BT-010: `POST /api/auth/password-reset` (request link) — **DONE** (see `docs/evaluations/BI1-BT-010.md`)
 - **Implements:** L2-008, L2-010, L2-044.
 - **Slice:** new entity `Users/PasswordResetToken` + config + migration `AddPasswordResetTokens`. `RequestPasswordResetCommand` always returns HTTP 202 with no body; if email matches a real user, generates 256-bit token, stores HMAC-SHA-256 hash (via `ITokenHasher`), dispatches email through `LoggingEmailSender`. Audits `PASSWORD_RESET_REQUESTED`.
 - **Acceptance test:** `RequestPasswordResetTests` — submitting a known and unknown email both return 202 with identical timing class; only the known email writes a `PasswordResetToken` row and triggers `LoggingEmailSender`.
