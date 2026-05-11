@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -10,13 +11,29 @@ namespace PullUp.Infrastructure.Security;
 
 public sealed class JwtTokenService : IJwtTokenService
 {
+    private const int RefreshTokenByteLength = 32; // 256 bits
+
     private readonly JwtOptions _options;
     private readonly JsonWebTokenHandler _handler;
+    private readonly ITokenHasher _tokenHasher;
 
-    public JwtTokenService(IOptions<JwtOptions> options)
+    public JwtTokenService(IOptions<JwtOptions> options, ITokenHasher tokenHasher)
     {
         _options = options.Value;
+        _tokenHasher = tokenHasher;
         _handler = new JsonWebTokenHandler();
+    }
+
+    public RefreshTokenIssuance IssueRefreshToken(User user)
+    {
+        var raw = Convert.ToBase64String(RandomNumberGenerator.GetBytes(RefreshTokenByteLength));
+        var hash = _tokenHasher.Hash(raw);
+        var record = RefreshToken.Issue(
+            userId: user.Id,
+            tokenHash: hash,
+            now: DateTimeOffset.UtcNow,
+            lifetime: TimeSpan.FromDays(_options.RefreshTokenLifetimeDays));
+        return new RefreshTokenIssuance(raw, record);
     }
 
     public AccessToken Issue(User user)

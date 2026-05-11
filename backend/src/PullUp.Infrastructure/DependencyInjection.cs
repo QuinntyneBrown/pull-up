@@ -43,6 +43,7 @@ public static class DependencyInjection
         services.AddSingleton<IAuditLogger, AuditLogger>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
+        services.AddSingleton<ITokenHasher, HmacTokenHasher>();
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
         services.AddHttpContextAccessor();

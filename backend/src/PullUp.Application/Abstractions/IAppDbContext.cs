@@ -7,6 +7,7 @@ namespace PullUp.Application.Abstractions;
 public interface IAppDbContext
 {
     DbSet<User> Users { get; }
+    DbSet<RefreshToken> RefreshTokens { get; }
     DbSet<AuditLogEntry> AuditLog { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
