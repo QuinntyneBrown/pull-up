@@ -1,0 +1,60 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using PullUp.Application.Abstractions;
+using PullUp.Infrastructure.Persistence;
+using PullUp.Infrastructure.Security;
+using System.Text;
+
+namespace PullUp.Infrastructure;
+
+public static class DependencyInjection
+{
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("AppDb")
+            ?? throw new InvalidOperationException("Missing connection string 'AppDb'.");
+
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(connectionString));
+
+        services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
+
+        services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
+
+        services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
+        services.AddSingleton<IJwtTokenService, JwtTokenService>();
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
+
+        var jwt = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
+            ?? throw new InvalidOperationException("Missing Jwt configuration section.");
+
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwt.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwt.Audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromSeconds(30),
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.SigningKey))
+                };
+            });
+
+        services.AddAuthorization();
+
+        return services;
+    }
+}
