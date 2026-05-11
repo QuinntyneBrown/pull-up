@@ -54,22 +54,22 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 
 ### FT-005: App-shell components — *enables* L2-052
 - **Slice contents:** in `projects/components/src/lib/`: `app-bar/app-bar.component.{ts,html,scss}` (leading icon slot, title input, trailing avatar slot), `bottom-nav-bar/bottom-nav-bar.component.{ts,html,scss}` (hidden ≥768 via CSS), `nav-rail/nav-rail.component.{ts,html,scss}` (shown ≥768 via CSS).
-- **Acceptance test:** Playwright responsive smoke (lands later in FT-019) verifies the swap at 768px; component-level inspection by composition in band D / E / F pages.
+- **Acceptance test:** Playwright responsive smoke (lands later in FT-020) verifies the swap at 768px; component-level inspection by composition in band D / E / F pages.
 - **Guidance:** Frontend, Library Structure (components imports nothing from api / domain).
 
 ### FT-006: Event card + RSVP avatar stack — *enables* L2-022, L2-023
-- **Slice contents:** `event-card/event-card.component.{ts,html,scss}` (inputs `event: EventSummary` — type-only import from `api`, no service injection — and `myRsvpStatus`; emits navigation via router-link in the consuming page); `rsvp-avatar-stack/rsvp-avatar-stack.component.{ts,html,scss}` (avatar list with overlap).
-- **Acceptance test:** indirectly verified by FT-014 (home flow uses event cards) and FT-016 (event detail uses avatar stack).
-- **Guidance:** Frontend, Library Structure. `EventCardComponent` taking `EventSummary` is a **type-only** dependency on `api`; no service injection, no import path violation per FP1 §1.
+- **Slice contents:** `event-card/event-card.component.{ts,html,scss}` takes **primitive inputs only** (`title: string`, `startsAtUtc: Date`, `location: string`, `isHost: boolean`, `myRsvpStatus: 'Going' | 'Maybe' | 'CantGo' | null`) so the `components` library imports nothing from `api`. The consuming page (FT-015 home, FT-017 detail) maps `EventSummary` → these primitives. `rsvp-avatar-stack/rsvp-avatar-stack.component.{ts,html,scss}` takes an array of `{ initials: string; tone: 'primary' | 'secondary' | 'tertiary' }` — also primitives.
+- **Acceptance test:** indirectly verified by FT-015 (home flow uses event cards) and FT-017 (event detail uses avatar stack).
+- **Guidance:** Frontend, Library Structure (components imports nothing from api/domain — verified by import grep in FT2 + FI1 evals). The "primitive inputs only" rule mirrors how `EventFormComponent` is placed in `domain` because **it** binds to api DTOs — same logic in reverse here keeps `components` clean.
 
 ### FT-007: State components — *enables* L2-062, L2-063
 - **Slice contents:** `empty-state/empty-state.component.{ts,html,scss}` (icon + title + supporting text + CTA slot), `error-state/error-state.component.{ts,html,scss}` (same shape, error theme + retry CTA), `loading-skeleton/loading-skeleton.component.{ts,html,scss}` (Material 3 skeleton).
-- **Acceptance test:** indirectly verified by FT-014 (home empty + error + loading paths).
+- **Acceptance test:** indirectly verified by FT-015 (home empty + error + loading paths).
 - **Guidance:** Frontend, Library Structure.
 
 ### FT-008: Interactive components — *enables* L2-025, L2-034
 - **Slice contents:** `filter-strip/filter-strip.component.{ts,html,scss}` (horizontal scroll chips, inputs `chips` + `selectedKey`, output `chipChange`), `segmented-button/segmented-button.component.{ts,html,scss}` (M3 segmented control for RSVP picker).
-- **Acceptance test:** indirectly verified by FT-014 + FT-016.
+- **Acceptance test:** indirectly verified by FT-015 + FT-017.
 - **Guidance:** Frontend, Library Structure.
 
 ---
