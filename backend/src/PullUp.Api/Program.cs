@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using PullUp.Application;
+using PullUp.Application.Common.Exceptions;
 using PullUp.Application.Features.Users.RegisterUser;
 using PullUp.Infrastructure;
 
@@ -67,6 +68,16 @@ app.UseExceptionHandler(handler =>
                 break;
             case UnauthorizedAccessException:
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                break;
+            case NotAuthorizedException notAuth:
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                await context.Response.WriteAsJsonAsync(new ProblemDetails
+                {
+                    Status = StatusCodes.Status403Forbidden,
+                    Title = "Not authorized",
+                    Detail = notAuth.Message,
+                    Type = "https://pullup.example/errors/not-authorized"
+                });
                 break;
             default:
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
