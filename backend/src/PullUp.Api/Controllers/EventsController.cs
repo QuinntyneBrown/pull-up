@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
 using PullUp.Application.Features.Events.CreateEvent;
+using PullUp.Application.Features.Events.ListMyEvents;
 
 namespace PullUp.Api.Controllers;
 
@@ -38,5 +39,16 @@ public sealed class EventsController : ControllerBase
 
         var response = await _mediator.Send(command, cancellationToken);
         return CreatedAtAction(nameof(Create), new { id = response.Id }, response);
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ListMyEventsResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> List(
+        [FromQuery] string? scope,
+        CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new ListMyEventsQuery(scope), cancellationToken);
+        return Ok(response);
     }
 }

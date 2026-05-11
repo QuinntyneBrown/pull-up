@@ -132,7 +132,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Slice:** new entities `Events/Event`, `Events/EventStatus`, `Events/Invitation`, `Events/Rsvp`, `Events/RsvpStatus` (one file each) + EF configs + migration `AddEventsAndInvitations` and `AddRsvps`. New `CreateEventCommand` + handler that persists Event + initial Invitations + host self-RSVP (`Going`) in one transaction. Validator: title 1–120, location 1–200, description 0–2000, date today-or-later, time HH:MM. `EventsController.Create`.
 - **Acceptance test:** `CreateEventTests` — happy path returns 201 with new event id; past date → 400 `code=PAST_DATE`; over-length title → 400; no invitees still creates event with host as sole going member.
 
-### BT-017: `GET /api/events` (list grouped by time window) + filter chips
+### BT-017: `GET /api/events` (list grouped by time window) + filter chips — **DONE** (see `docs/evaluations/BI1-BT-017.md`)
 - **Implements:** L2-022, L2-024, L2-025.
 - **Slice:** `ListMyEventsQuery` accepting scope filter (`All`/`Hosting`/`Invited`/`Past`). Handler joins Events ↔ Invitations ↔ Rsvps for the current user and projects to a flat DTO with `thisWeek`, `laterThisMonth`, `nextMonth`, `past` groupings using `AsNoTracking()`. `EventsController.List`.
 - **Acceptance test:** `ListMyEventsTests` — seed events across windows; assert correct grouping; `scope=Hosting` only returns hosted; `scope=Past` returns reverse-chronological events older than today.
