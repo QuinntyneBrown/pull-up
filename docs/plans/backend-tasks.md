@@ -27,7 +27,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 
 ## A. Cross-cutting (do these first — they enable later slices)
 
-### BT-001: Authorization behavior + `[AuthorizationRequirement]` marker
+### BT-001: Authorization behavior + `[AuthorizationRequirement]` marker — **DONE** (see `docs/evaluations/BI1-BT-001.md`)
 - **Implements:** L2-027, L2-045, L2-046 (host/invitee + RBAC enforcement).
 - **Slice:** new `Application/Behaviors/AuthorizationBehavior.cs` runs after `ValidationBehavior`; a marker interface `IAuthorizationRequirement` on a request triggers resolution of a per-requirement `IAuthorizationHandler` (also new, in Application). Throws `NotAuthorizedException` on failure; `Program.cs` maps to HTTP 403.
 - **Acceptance test:** `AuthorizationBehaviorTests` — a fake request implementing `IAuthorizationRequirement` is rejected; one without the marker is allowed; an authorized request flows through.
