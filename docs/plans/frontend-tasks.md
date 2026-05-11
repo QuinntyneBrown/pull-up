@@ -76,7 +76,7 @@ Bands C–F are true vertical slices: each ships a route + UI + at least one new
 
 ## C. Auth feature pages (vertical slices)
 
-### FT-009: Sign-in page + flow — **L2-004, L2-005**
+### FT-009: Sign-in page + flow — **L2-004, L2-005** — **done**
 - **Slice contents:** new `projects/domain/src/lib/sign-in-page/sign-in-page.component.{ts,html,scss}`. Reactive form with email + password. Wires `@Inject(AUTH_SERVICE) auth: IAuthService` and calls `auth.signIn(...)`. On 200 stores tokens and routes to `/home`. On 401 surfaces generic "Invalid email or password." Routes registered in `app.routes.ts` at `/sign-in`. Composes `BrandLogoComponent`.
 - **Acceptance test:** `frontend/e2e/sign-in-flow.spec.ts` + `pages/sign-in-page.ts` — happy path stores tokens and navigates to home; wrong creds shows the generic 401 message and stays on /sign-in.
 - **Guidance:** Frontend, Library Structure (domain), Authentication, Testing.
