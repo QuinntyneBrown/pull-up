@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PullUp.Api.Requests;
 using PullUp.Application.Features.Users.RefreshAccessToken;
 using PullUp.Application.Features.Users.SignInUser;
+using PullUp.Application.Features.Users.SignOut;
 
 namespace PullUp.Api.Controllers;
 
@@ -42,5 +43,16 @@ public sealed class AuthController : ControllerBase
         var command = new RefreshAccessTokenCommand(request.RefreshToken);
         var response = await _mediator.Send(command, cancellationToken);
         return Ok(response);
+    }
+
+    [HttpPost("sign-out")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> SignOut(
+        [FromBody] SignOutRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new SignOutCommand(request.RefreshToken), cancellationToken);
+        return NoContent();
     }
 }

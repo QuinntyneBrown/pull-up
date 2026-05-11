@@ -79,7 +79,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Acceptance test:** `RefreshAccessTokenTests` — sign in, swap the refresh token for new pair, old one becomes unusable, new one continues to work.
 - **Depends on:** BT-005, BT-006.
 
-### BT-009: `POST /api/auth/sign-out`
+### BT-009: `POST /api/auth/sign-out` — **DONE** (see `docs/evaluations/BI1-BT-009.md`)
 - **Implements:** L2-007.
 - **Slice:** new `SignOutCommand` that revokes the supplied refresh token. Audited via `AuditingBehavior` with `SIGN_OUT` event.
 - **Acceptance test:** `SignOutTests` — sign in, sign out, the refresh token no longer mints new access tokens.
