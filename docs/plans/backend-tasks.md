@@ -148,7 +148,7 @@ Treating them as separate prerequisite tasks is the explicit choice; each carrie
 - **Slice:** new `INotificationSender` (Application) + `LoggingNotificationSender` (Infrastructure no-op). New `DispatchInvitationNotificationCommand` taking `(eventId, recipientUserId, kind)`; handler reads the recipient's `NotificationPreference`, gates on `NewInvitations`, calls `INotificationSender`. Reusable by `CreateEvent` (on each invitee), `AddInvitee`, `UpdateEvent` (date/time/location change), `CancelEvent`.
 - **Acceptance test:** `DispatchInvitationNotificationTests` — recipient with `NewInvitations=off` does not receive; recipient with on does; passes the correct kind to the sender.
 
-### BT-020: `PUT /api/events/{id}` (host edit)
+### BT-020: `PUT /api/events/{id}` (host edit) — **DONE** (see `docs/evaluations/BI1-BT-020.md`)
 - **Implements:** L2-026, L2-027, L2-028.
 - **Slice:** `UpdateEventCommand` host-only via `IAuthorizationRequirement`; updates editable fields (title, date, time, location, description, options); on date/time/location change loops invitees and fans out `DispatchInvitationNotification(kind=EventUpdated)`.
 - **Acceptance test:** `UpdateEventTests` — host can edit; non-host returns 403; editing date triggers notifications; editing only description does not.

@@ -6,6 +6,7 @@ using PullUp.Application.Features.Events.CancelEvent;
 using PullUp.Application.Features.Events.CreateEvent;
 using PullUp.Application.Features.Events.GetEvent;
 using PullUp.Application.Features.Events.ListMyEvents;
+using PullUp.Application.Features.Events.UpdateEvent;
 
 namespace PullUp.Api.Controllers;
 
@@ -73,6 +74,30 @@ public sealed class EventsController : ControllerBase
     public async Task<IActionResult> Cancel(Guid id, CancellationToken cancellationToken)
     {
         await _mediator.Send(new CancelEventCommand(id), cancellationToken);
+        return NoContent();
+    }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update(
+        Guid id,
+        [FromBody] UpdateEventRequest request,
+        CancellationToken cancellationToken)
+    {
+        var command = new UpdateEventCommand(
+            id,
+            request.Title,
+            request.StartsAtUtc,
+            request.EndsAtUtc,
+            request.Location,
+            request.Description ?? string.Empty,
+            request.AllowPlusOne,
+            request.ShowGuestList);
+        await _mediator.Send(command, cancellationToken);
         return NoContent();
     }
 }
